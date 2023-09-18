@@ -5,7 +5,7 @@ import rootSaga from '../sagas/linkSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
-// Add Extensions Redux DevTools Middleware
+//! Add Extensions Redux DevTools Middleware 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
@@ -13,6 +13,6 @@ const store = createStore(
   composeEnhancers(applyMiddleware(sagaMiddleware))
 );
 
-sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(rootSaga); 
 
 export default store;

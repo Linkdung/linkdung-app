@@ -4,3 +4,10 @@ export const addLink = (link) => {
     payload: link,
   };
 };
+
+export const removeLink = (linkIndex) => {
+  return {
+    type: 'REMOVE_LINK',
+    payload: linkIndex,
+  };
+};

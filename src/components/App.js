@@ -1,40 +1,64 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { addLink } from '../actions/linkActions';
-import LinkList from './LinkList';
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { removeLink } from "../actions/linkActions";
+import { Button } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import { motion } from "framer-motion";
+import "./App.css";
+import ModalCreate from "./modals/create";
+import { PlusOutlined } from "@ant-design/icons";
 
-const App = ({ links, addLink }) => {
-  const [link, setLink] = useState({ title: '', url: '' });
 
-  const handleChange = (e) => {
-    setLink({ ...link, [e.target.name]: e.target.value });
+const App = ({ links, removeLink }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleDeleteLink = (index) => {
+    removeLink(index);
   };
 
-  const handleAddLink = () => {
-    addLink(link);
-    setLink({ title: '', url: '' });
+  const variants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalVisible(false);
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>LinkDung App</h1>
-      <input
-        type="text"
-        name="title"
-        placeholder="Link Title"
-        value={link.title}
-        onChange={handleChange}
-      />
-      <input
-        type="text"
-        name="url"
-        placeholder="Link URL"
-        value={link.url}
-        onChange={handleChange}
-      />
-      <button onClick={handleAddLink}>Add Link</button>
+    <div className="add-button">
+      <Button type="primary" onClick={showModal} icon={<PlusOutlined />} />
+    </div>
 
-      <LinkList links={links} />
+      <ul>
+        {links.map((link, index) => (
+          <motion.li
+            key={index}
+            initial="hidden"
+            animate="visible"
+            variants={variants}
+            className="link-item"
+          >
+            <a href={link.url} target="_blank" rel="noopener noreferrer">
+              {link.title}
+            </a>
+            <Button
+              type="danger"
+              icon={<DeleteOutlined />}
+              className="delete-button"
+              onClick={() => handleDeleteLink(index)}
+            >
+              Delete
+            </Button>
+          </motion.li>
+        ))}
+      </ul>
+      <ModalCreate isOpen={isModalVisible} onClose={handleModalClose} />
     </div>
   );
 };
@@ -45,4 +69,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { addLink })(App);
+export default connect(mapStateToProps, { removeLink })(App);
