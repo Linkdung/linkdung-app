@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { removeLink } from "../actions/linkActions";
 import { Button } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
-import "./App.css";
-import ModalCreate from "./modals/create";
 import { PlusOutlined } from "@ant-design/icons";
+import ModalCreate from "../../components/modals/create";
+import { removeLink } from "../../actions/linkActions";
+import "./adminPages.css";
 
-
-const App = ({ links, removeLink }) => {
+const AdminPages = ({ links, removeLink }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleDeleteLink = (index) => {
     removeLink(index);
@@ -31,9 +30,9 @@ const App = ({ links, removeLink }) => {
   return (
     <div className="container">
       <h1>LinkDung App</h1>
-    <div className="add-button">
-      <Button type="primary" onClick={showModal} icon={<PlusOutlined />} />
-    </div>
+      <div className="add-button">
+        <Button type="primary" onClick={showModal} icon={<PlusOutlined />} />
+      </div>
 
       <ul>
         {links.map((link, index) => (
@@ -69,4 +68,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { removeLink })(App);
+export default connect(mapStateToProps, { removeLink })(AdminPages);
