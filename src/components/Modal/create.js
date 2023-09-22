@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Input, Modal } from "antd";
 import { connect } from "react-redux";
-import { addLink } from "../../actions/linkActions";
+import { addLink } from "../../store/actions";
 
 const ModalCreate = ({ isOpen, onClose, onOk, addLink }) => {
   const [link, setLink] = useState({ title: "", url: "" });
@@ -26,7 +26,7 @@ const ModalCreate = ({ isOpen, onClose, onOk, addLink }) => {
     <div>
       <Modal
         title="Create Profile"
-        visible={isOpen}
+        open={isOpen}
         onCancel={onClose}
         onOk={handleAddLink}
         okText="Add Link"
