@@ -31,7 +31,12 @@ const AdminPages = ({ links, removeLink }) => {
     <div className="container">
       <h1>LinkDung App</h1>
       <div className="add-button">
-        <Button type="primary" aria-label="Add Link" onClick={showModal} icon={<PlusOutlined />} />
+        <Button
+          type="primary"
+          aria-label="Add Link"
+          onClick={showModal}
+          icon={<PlusOutlined />}
+        />
       </div>
 
       <ul>
