@@ -26,8 +26,10 @@ describe("AdminPages Component", () => {
     );
 
   it("renders without errors", () => {
-    renderAdminPages();
+    const { asFragment } = renderAdminPages();
+    // renderAdminPages();
     expect(screen.getByText("LinkDung App")).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it("displays links correctly", () => {
