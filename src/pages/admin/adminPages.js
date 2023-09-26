@@ -4,9 +4,9 @@ import { Button } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 import { PlusOutlined } from "@ant-design/icons";
-import ModalCreate from "../../components/modals/create";
-import { removeLink } from "../../actions/linkActions";
-import "./adminPages.css";
+import ModalCreate from "../../components/Modal/create";
+import { removeLink } from "../../store/actions";
+import "./style/adminPages.css";
 
 const AdminPages = ({ links, removeLink }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -31,7 +31,12 @@ const AdminPages = ({ links, removeLink }) => {
     <div className="container">
       <h1>LinkDung App</h1>
       <div className="add-button">
-        <Button type="primary" onClick={showModal} icon={<PlusOutlined />} />
+        <Button
+          type="primary"
+          aria-label="Add Link"
+          onClick={showModal}
+          icon={<PlusOutlined />}
+        />
       </div>
 
       <ul>

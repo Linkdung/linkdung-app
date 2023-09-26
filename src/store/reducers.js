@@ -2,7 +2,7 @@ const initialState = {
   links: [],
 };
 
-const linkReducer = (state = initialState, action) => {
+const reducers = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_LINK":
       return {
@@ -22,4 +22,4 @@ const linkReducer = (state = initialState, action) => {
   }
 };
 
-export default linkReducer;
+export default reducers;
