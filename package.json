@@ -1,57 +1,21 @@
 {
-  "name": "linkdung-app",
-  "version": "0.1.0",
+  "name": "nuxt-app",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "antd": "^5.9.1",
-    "axios": "^1.5.0",
-    "eslint-plugin-jest-dom": "^4.0.2",
-    "framer-motion": "^10.16.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-redux": "^8.1.2",
-    "react-scripts": "5.0.1",
-    "redux": "^4.2.1",
-    "redux-saga": "^1.2.3",
-    "redux-thunk": "^2.4.2",
-    "web-vitals": "^2.1.4"
-  },
+  "type": "module",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "jest",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.20",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/preset-env": "^7.22.20",
-    "@babel/preset-react": "^7.22.15",
-    "@testing-library/jest-dom": "^5.16.4",
-    "jest": "28.1.0",
-    "jest-environment-jsdom": "28.1.0",
-    "react-router-dom": "^6.16.0",
-    "redux-mock-store": "^1.5.4"
+    "@nuxt/devtools": "latest",
+    "autoprefixer": "^10.4.16",
+    "nuxt": "^3.8.2",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5",
+    "vue": "^3.3.8",
+    "vue-router": "^4.2.5"
   }
 }
