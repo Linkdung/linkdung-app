@@ -1,56 +1,58 @@
 <template>
-  <section
-    id="home"
-    class="dark:bg-white relative z-10 overflow-hidden bg-gray-dark pb-16 pt-[160px] md:pb-[160px] md:pt-[190px] xl:pb-[200px] xl:pt-[240px] 2xl:pb-[240px] 2xl:pt-[250px]"
-  >
+  <section class="relative z-10 py-16 md:py-20 lg:py-28">
     <div class="container">
+      <SectionTitle
+        title="Are You Ready To Get Started?"
+        paragraph="There are many variant of style you can choose for youre collapse link"
+        center
+        mb="80px"
+      />
+
       <div class="-mx-4 flex flex-wrap">
-        <div class="w-full px-4 py-60">
+        <div class="w-full px-4">
           <div
-            class="wow fadeInUp mx-auto max-w-[800px] text-center"
-            data-wow-delay=".2s"
+            class="wow fadeInUp mx-auto max-w-[770px] overflow-hidden rounded-md"
+            data-wow-delay=".15s"
           >
-            <div
-              class="absolute left-1/2 top-1/2 h-96 w-80 -translate-x-1/2 -translate-y-1/2 rotate-6 rounded-2xl bg-gray-400"
-            ></div>
-            <!-- This is the shadow -->
-
-            <div
-              class="absolute left-1/2 top-1/2 h-96 w-80 -translate-x-1/2 -translate-y-1/2 rotate-6 space-y-6 rounded-2xl bg-gray-100 p-6 transition duration-300 hover:rotate-0"
-            >
-              <!-- This is the card -->
-              <div class="flex justify-end">
-                <div class="h-4 w-4 rounded-full bg-gray-400"></div>
-                <!-- This is the dot -->
-              </div>
-
-              <header class="text-center text-xl font-extrabold text-gray-600">
-                Empty Paper Link
-              </header>
-
-              <div>
-                <p class="text-center text-5xl font-extrabold text-gray-900">
-                  Try out Linkdung
-                </p>
-                <p class="text-center text-4xl font-extrabold text-primary">
-                  Easy way wrap your link
-                </p>
-              </div>
-
-              <footer class="mb-10 flex justify-center">
+            <div class="relative aspect-[77/40] items-center justify-center">
+              <div
+                class="absolute right-0 top-0 flex h-full w-full items-center justify-center"
+              >
                 <button
-                  class="flex items-baseline gap-2 rounded-lg bg-primary px-4 py-2.5 text-xl font-bold text-white hover:bg-opacity-80 transition duration-300 ease-in-out"
+                  aria-label="video play button"
+                  @click="()=>this.$router.push('/guest')"
+                  class="border flex h-[120px] w-[140px] items-center justify-center rounded-md bg-white text-primary transition-transform duration-300 ease-in-out transform-gpu hover:scale-110 hover:bg-primary hover:text-white"
                 >
-                  <span>Start</span>
-                  <i class="fas fa-hand-peace text-xl"></i>
+                  <svg
+                    width="32"
+                    height="36"
+                    viewBox="0 0 16 18"
+                    class="fill-current"
+                  >
+                    <path
+                      d="M15.5 8.13397C16.1667 8.51888 16.1667 9.48112 15.5 9.86602L2 17.6603C1.33333 18.0452 0.499999 17.564 0.499999 16.7942L0.5 1.20577C0.5 0.43597 1.33333 -0.0451549 2 0.339745L15.5 8.13397Z"
+                    />
+                  </svg>
                 </button>
-              </footer>
-            </div>  
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <div
+      class="absolute bottom-0 left-0 right-0 z-[-1] h-full w-full bg-[url(/img/shape-bg/shape.svg)] bg-cover bg-center bg-no-repeat"
+    ></div>
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script>
+import SectionTitle from "../shared/SectionTitle.vue";
+
+export default {
+  components: {
+    SectionTitle,
+  },
+};
+</script>

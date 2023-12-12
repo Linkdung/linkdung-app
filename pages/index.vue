@@ -1,9 +1,19 @@
 <script setup lang="ts">
-const route = useRoute();
+useHead({
+  title: 'Linkdung',
+  meta: [
+    { name: 'Easy Collapse Your Link', content: 'Dashboard.' }
+  ],
+  bodyAttrs: {
+    class: 'test'
+  },
+})
 </script>
+
 
 <template>
   <ScrollUp />
   <Hero />
+  <Features />
   <Guest />
 </template>
