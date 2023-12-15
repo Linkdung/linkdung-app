@@ -11,7 +11,7 @@ import type { NuxtImg } from '#build/components';
             <NuxtLink :to="{ name: 'login' }" class="mb-8 inline-block">
               <div class="flex items-end">
                 <img
-                  src="/img/NoLink.png"
+                  src="/img/NolepDev.png"
                   alt="logo"
                   class="dark:hidden w-14 h-14"
                 />

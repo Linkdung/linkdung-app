@@ -3,12 +3,19 @@ import type { TLinks } from '~/types/Links';
 
 export const useLink = (): TLinks => {
   const links: Ref<string[]> = ref([]);
+  const urlTitles: Ref<string[]> = ref([]);
 
-  const addLink = (link: string): void => {
+  const setAddLink = (link: string): void => {
     if (link.trim() !== '') {
       links.value.push(link);
     }
   };
 
-  return { links, addLink };
+  const setTitleLink = (urlTitle: string): void => {
+    if (urlTitle.trim() !== '') {
+      urlTitles.value.push(urlTitle);
+    }
+  }
+
+  return { links, setAddLink, urlTitles, setTitleLink };
 };

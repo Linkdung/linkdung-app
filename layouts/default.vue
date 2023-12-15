@@ -10,7 +10,7 @@
 export default {
   computed: {
     shouldShowFooter() {
-      return this.$route.path !== '/guest';
+      return !this.$route.path.includes('guest');
       // return !['/guest', '/login'].includes(this.$route.path);
     },
   },

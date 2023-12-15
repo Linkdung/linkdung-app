@@ -2,5 +2,7 @@ import { type Ref } from 'vue';
 
 export type TLinks = {
   links: Ref<string[]>;
-  addLink: (link: string) => void;
+  urlTitles: Ref<string[]>;
+  setAddLink: (link: string) => void;
+  setTitleLink: (urlTitle: string) => void;
 }
