@@ -1,9 +1,12 @@
 import { ref, type Ref } from 'vue';
-import type { TLinks } from '~/types/Links';
+import type { TLinktree } from '~/types/Links';
 
-export const useLink = (): TLinks => {
-  const links: Ref<string[]> = ref([]);
-  const urlTitles: Ref<string[]> = ref([]);
+
+export const useLink = (linktreeData: TLinktree) => {
+  const links: Ref<string[]> = ref(linktreeData.links);
+  const urlTitles: Ref<string[]> = ref(linktreeData.titles);
+  const header: Ref<string> = ref(linktreeData.header);
+
 
   const setAddLink = (link: string): void => {
     if (link.trim() !== '') {
@@ -17,5 +20,5 @@ export const useLink = (): TLinks => {
     }
   }
 
-  return { links, setAddLink, urlTitles, setTitleLink };
+  return { links, setAddLink, urlTitles, setTitleLink, header };
 };
