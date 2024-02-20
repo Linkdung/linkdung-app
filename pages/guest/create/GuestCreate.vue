@@ -215,9 +215,9 @@ const { mutate } = useMutation(createGuestDataMutation, {
     refetchQueries: [{ query: createGuestDataMutation }],
     context: {
       headers: {
-        'Apollo-Require-Preflight': 'true',
+        // 'Apollo-Require-Preflight': 'true',
         "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': '*',
+        // 'Access-Control-Allow-Origin': '*',
       }
     }
   });
@@ -225,7 +225,8 @@ const { mutate } = useMutation(createGuestDataMutation, {
 const handleSubmit = async () => {
   var data = {
     header: header.value,
-    urlTitles: JSON.parse(
+    endpoint: "",
+    titles: JSON.parse(
       JSON.stringify(urlTitles.value.filter((title) => title.trim() !== ""))
     ),
     links: JSON.parse(

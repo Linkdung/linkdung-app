@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   modules: ["@nuxtjs/apollo"],
   apollo: {
-    clients: { default: { httpEndpoint: "https://linkdung-service-nolepdev.koyeb.app/query" } },
+    clients: { default: { httpEndpoint: "http://127.0.0.1:8080/query" } },
   },
   app: {
     head: {
