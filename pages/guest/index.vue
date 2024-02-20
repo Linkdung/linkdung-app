@@ -18,7 +18,7 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 import GuestCreate from "./create/GuestCreate.vue";
 import { ref } from "vue";
 

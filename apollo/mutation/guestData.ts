@@ -1,11 +1,12 @@
 export const createGuestDataMutation = gql`
-  mutation Insert($data: NewLinktree!) {
-    createLink(input: $data) {
-      id
-      endpoint
-      header
-      titles
-      links
+  mutation Create($data: LinktreeInput!) {
+    linktree {
+      createLink(input: $data) {
+        endpoint
+        header
+        titles
+        links
+      }
     }
   }
 `;

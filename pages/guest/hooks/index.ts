@@ -2,10 +2,10 @@ import { ref, type Ref } from 'vue';
 import type { TLinktree } from '~/types/Links';
 
 
-export const useLink = (linktreeData: TLinktree) => {
-  const links: Ref<string[]> = ref(linktreeData.links);
-  const urlTitles: Ref<string[]> = ref(linktreeData.titles);
-  const header: Ref<string> = ref(linktreeData.header);
+export const useLink = () => {
+  const links: Ref<string[]> = ref([]);
+  const urlTitles: Ref<string[]> = ref([]);
+  const header: Ref<string> = ref("");
 
 
   const setAddLink = (link: string): void => {

@@ -155,17 +155,14 @@
 <script setup lang="ts">
 import { ref, toRefs } from "vue";
 import { useLink } from "../hooks";
-import type { TRootGuestWithId } from "~/types/Links";
-import { getGuestWithId } from "~/apollo/queries/guestData";
-import { updateGuestDataMutation } from "~/apollo/mutation/guestData";
+import { createGuestDataMutation } from "~/apollo/mutation/guestData";
 
-const { data } = await useAsyncQuery<TRootGuestWithId>(getGuestWithId, {
-  id: "6581451209d580cf9e096151",
-});
-const linktreeData = ref(data.value.linktree);
-const { links, setAddLink, urlTitles, header, setTitleLink } = useLink(
-  linktreeData.value
-);
+// const { data } = await useAsyncQuery<TRootGuestWithId>(getGuestWithId, {
+//   id: "6581451209d580cf9e096151",
+// });
+
+// const linktreeData = ref(data.value.linktree);
+const { links, setAddLink, urlTitles, header, setTitleLink } = useLink();
 
 const props = defineProps({
   isPreview: {
@@ -214,33 +211,31 @@ const handleLinkChange = (event: any, index: string | number) => {
   links.value[index as number] = event.target.value;
 };
 
-const { mutate } = useMutation(updateGuestDataMutation, {
-    refetchQueries: [{ query: updateGuestDataMutation }],
+const { mutate } = useMutation(createGuestDataMutation, {
+    refetchQueries: [{ query: createGuestDataMutation }],
     context: {
       headers: {
         'Apollo-Require-Preflight': 'true',
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*',
       }
     }
   });
 
 const handleSubmit = async () => {
-  try {
-    if (header.value.trim() !== "") {
-      const result = await mutate({
-        id: "6581451209d580cf9e096151",
-        data: {
-          endpoint: "ini endpoint",
-          header: "Coba Ganti",
-          titles: ["Satu", "dua"],
-          links: ["example.com", "nolink.my.id"],
-        },
-      });
-
-      console.log(result);
-    }
-  } catch (error) {
-    console.error("Error during mutation:", error);
+  var data = {
+    header: header.value,
+    urlTitles: JSON.parse(
+      JSON.stringify(urlTitles.value.filter((title) => title.trim() !== ""))
+    ),
+    links: JSON.parse(
+      JSON.stringify(links.value.filter((title) => title.trim() !== ""))
+    ),
+  };
+  var wrapData = {data};
+  if (header.value.trim() !== "") {
+    const result = await mutate(wrapData);
   }
+
 };
 </script>
