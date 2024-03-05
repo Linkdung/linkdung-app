@@ -11,7 +11,7 @@
               {{ isPreview ? "Create" : "Preview" }}
             </button>
           </div>
-          <GuestCreate :isPreview="isPreview" />
+          <GuestForm :isPreview="isPreview" />
         </div>
       </div>
     </div>
@@ -19,12 +19,12 @@
 </template>
 
 <script lang="ts">
-import GuestCreate from "./create/GuestCreate.vue";
+import GuestForm from "./form/GuestForm.vue";
 import { ref } from "vue";
 
 export default {
   components: {
-    GuestCreate,
+    GuestForm,
   },
   setup() {
     const isPreview = ref(false);

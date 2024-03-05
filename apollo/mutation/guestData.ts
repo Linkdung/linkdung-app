@@ -21,3 +21,16 @@ export const updateGuestDataMutation = gql`
     }
   }
 `;
+
+export const getGuestDataQuery = gql`
+  query Get($endpoint: String!) {
+    linktree {
+      getLink(endpoint: $endpoint) {
+        endpoint
+        header
+        titles
+        links
+      }
+    }
+  }
+`;

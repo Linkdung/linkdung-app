@@ -1,18 +1,16 @@
-import { type Ref } from 'vue';
+import { type Ref } from "vue";
 
-export type TLinks = {
+export interface TLink {
+  linktree: TLinktree;
+}
+
+export interface TLinktree {
+  getLink: TGetLink;
+}
+
+export interface TGetLink {
+  endpoint: string;
+  header: string;
+  titles: Ref<string[]>;
   links: Ref<string[]>;
-  urlTitles: Ref<string[]>;
-  setAddLink: (link: string) => void;
-  setTitleLink: (urlTitle: string) => void;
-}
-
-export type TRootGuestWithId = {
-  linktree: TLinktree
-}
-
-export type TLinktree = {
-  header: string
-  titles: string[]
-  links: string[]
 }

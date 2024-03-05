@@ -19,7 +19,7 @@
             <p
               class="dark:text-body-color-dark mb-12 text-base !leading-relaxed text-body-color sm:text-lg md:text-xl"
             >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non rerum
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Non rerum
               minima beatae velit fuga, ex iure temporibus error consequuntur.
               Nam ipsa veniam, autem reiciendis ab optio accusamus illum impedit
               commodi earum consequatur est quam? Doloremque, natus veniam
@@ -29,24 +29,24 @@
             <div
               class="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
             >
-            <a
-                href=""
+              <NuxtLink
+                :to="{ name: 'linkdung-pro' }"
                 class="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
               >
                 🔥 Get Linkdung Pro
-              </a>
+              </NuxtLink>
               <NuxtLink
-                :to="{name: 'login'}"
+                :to="{ name: 'account' }"
                 class="inline-block rounded-sm bg-black px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:bg-white/10 dark:text-white dark:hover:bg-white/5"
               >
                 Start With Login
               </NuxtLink>
-              <a
-                href=""
+              <NuxtLink
+                :to="{ name: 'guest' }"
                 class="inline-block rounded-sm bg-black px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:bg-white/10 dark:text-white dark:hover:bg-white/5"
               >
                 Start With Guest Mode 😒
-              </a>
+              </NuxtLink>
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { useFetch } from 'nuxt/app';
+import { useFetch } from "nuxt/app";
 
 const { data } = await useFetch("/api/hello");
 </script>

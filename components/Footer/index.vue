@@ -8,7 +8,7 @@ import type { NuxtImg } from '#build/components';
       <div class="-mx-4 flex flex-wrap">
         <div class="w-full px-4 md:w-1/2 lg:w-4/12 xl:w-5/12">
           <div class="mb-12 max-w-[360px] lg:mb-16">
-            <NuxtLink :to="{ name: 'login' }" class="mb-8 inline-block">
+            <NuxtLink :to="{ name: 'account' }" class="mb-8 inline-block">
               <div class="flex items-end">
                 <img
                   src="/img/NolepDev.png"
