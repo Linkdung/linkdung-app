@@ -4,7 +4,11 @@
       class="font-display text-2xl mb-6"
       style="color:var(--accent-primary);"
     >
-      ANALYTICS 📊
+      <IconChartNoAxesCombined
+        :size="22"
+        class="inline-block mr-2"
+      />
+      ANALYTICS
     </h2>
 
     <!-- Stat cards -->
@@ -59,7 +63,14 @@
             : ''"
           @click="chartType = ct.value"
         >
-          {{ ct.icon }} {{ ct.label }}
+          <ClientOnly>
+            <component
+              :is="iconMap[ct.icon as keyof typeof iconMap]"
+              :size="18"
+              class="inline-block"
+            />
+            {{ ct.label }}
+          </ClientOnly>
         </button>
       </div>
     </div>
@@ -115,10 +126,15 @@ import { BarChart, LineChart, PieChart } from 'echarts/charts'
 import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 import VChart from 'vue-echarts'
+import {
+  ChartColumnIncreasing, ChartSpline, ChartPie,
+} from 'lucide-vue-next'
 import { getLinkBg } from '~/composables/useLinkStyles'
 import { _rgba } from '~/composables/useAccentColor'
 import { useProfileStore } from '~/stores/profile'
 import { useThemeStore } from '~/stores/theme'
+
+const iconMap = markRaw({ ChartColumnIncreasing, ChartSpline, ChartPie })
 
 use([BarChart, LineChart, PieChart, GridComponent, TooltipComponent, LegendComponent, CanvasRenderer])
 
@@ -128,9 +144,9 @@ const { isDark } = storeToRefs(useThemeStore())
 
 const chartType = ref<'bar' | 'line' | 'pie'>('bar')
 const chartTypes: Array<{ value: 'bar' | 'line' | 'pie', label: string, icon: string }> = [
-  { value: 'bar', label: 'Bar', icon: '📊' },
-  { value: 'line', label: 'Line', icon: '📈' },
-  { value: 'pie', label: 'Pie', icon: '🥧' },
+  { value: 'bar', label: 'Bar', icon: 'ChartColumnIncreasing' },
+  { value: 'line', label: 'Line', icon: 'ChartSpline' },
+  { value: 'pie', label: 'Pie', icon: 'ChartPie' },
 ]
 const maxClicks = computed(() => Math.max(...allLinks.value.map(l => l.clicks), 1))
 const axisColor = computed(() => isDark.value ? '#F5F5F0' : '#0A0A0A')

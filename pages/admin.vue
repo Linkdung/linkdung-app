@@ -89,7 +89,14 @@
             : ''"
           @click="activeTab = tab.id"
         >
-          {{ tab.icon }} {{ tab.label }}
+          <ClientOnly>
+            <component
+              :is="iconMap[tab.icon as keyof typeof iconMap]"
+              :size="18"
+              class="inline-block"
+            />
+            {{ tab.label }}
+          </ClientOnly>
         </button>
       </div>
 
@@ -130,8 +137,13 @@
 </template>
 
 <script setup lang="ts">
+import {
+  Link, User, Palette, BarChart2,
+} from 'lucide-vue-next'
 import { useProfileStore } from '~/stores/profile'
 import { useAccentColor } from '~/composables/useAccentColor'
+
+const iconMap = markRaw({ Link, User, Palette, BarChart2 })
 
 useHead({ title: 'Admin | Linkdung' })
 
@@ -148,10 +160,10 @@ onMounted(() => {
 
 const activeTab = ref('links')
 const tabs = [
-  { id: 'links', label: 'Links', icon: '🔗' },
-  { id: 'profile', label: 'Profile', icon: '👤' },
-  { id: 'analytics', label: 'Analytics', icon: '📊' },
-  { id: 'appearance', label: 'Look', icon: '🎨' },
+  { id: 'links', label: 'Links', icon: 'Link' },
+  { id: 'profile', label: 'Profile', icon: 'User' },
+  { id: 'analytics', label: 'Analytics', icon: 'BarChart2' },
+  { id: 'appearance', label: 'Look', icon: 'Palette' },
 ]
 
 const deleteTarget = ref<{ id: string, title: string } | null>(null)

@@ -5,7 +5,11 @@
         class="font-display text-2xl mb-5"
         style="color:var(--accent-primary);"
       >
-        🎨 APPEARANCE
+        <IconPalette
+          :size="22"
+          class="inline-block mr-2"
+        />
+        APPEARANCE
       </h2>
 
       <!-- Theme mode -->
