@@ -84,7 +84,9 @@
               v-for="s in 5"
               :key="s"
               class="text-lg"
-            >⭐</span>
+            >
+              <IconStar fill="#facc15" />
+            </span>
           </div>
           <p class="font-comic text-sm leading-relaxed mb-4">
             "{{ review.text }}"
@@ -147,6 +149,11 @@
             class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 font-display text-sm border-3 border-black"
             style="background:var(--accent-primary); color:#fff; box-shadow:2px 2px 0 #000;"
           >
+            <IconStar
+              fill="#facc15"
+              class="inline-block"
+              :size="18"
+            />
             {{ plan.badge }}
           </div>
           <div class="text-3xl mb-3">
@@ -367,7 +374,7 @@ const testimonials = [
 const pricingPlans = [
   { name: 'Free', icon: '🕸️', price: '$0', period: 'forever', featured: false, badge: null,
     cta: 'Start Free', features: ['Unlimited links', 'Basic analytics', '5 card styles + custom color', 'Dark & light mode', '✗ Custom domain', '✗ Priority support'] },
-  { name: 'Pro', icon: '🕷️', price: '$5', period: '/month', featured: true, badge: '⭐ Most Popular',
+  { name: 'Pro', icon: '🕷️', price: '$5', period: '/month', featured: true, badge: 'Most Popular',
     cta: 'Go Pro', features: ['Everything in Free', 'Advanced analytics (bar/line/pie)', 'Custom domain', 'Remove branding', 'Priority support', 'Early template access'] },
   { name: 'Team', icon: '🕸️🕷️', price: '$15', period: '/month', featured: false, badge: null,
     cta: 'Contact Us', features: ['Everything in Pro', 'Up to 5 profiles', 'Team dashboard', 'Shared analytics', 'API access', 'Dedicated support'] },
