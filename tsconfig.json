@@ -1,4 +1,30 @@
 {
-  // https://nuxt.com/docs/guide/concepts/typescript
-  "extends": "./.nuxt/tsconfig.json"
+  // Extends dari .nuxt/tsconfig.json yang di-generate otomatis oleh `nuxt prepare`.
+  // File ini berisi semua path alias, auto-import types, dan component types.
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "moduleResolution": "Bundler",
+    "jsx": "preserve",
+    // paths sudah di-handle oleh .nuxt/tsconfig.json, tapi backup di sini
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    // Source files
+    "**/*.ts",
+    "**/*.vue",
+    // Auto-generated Nuxt types (useHead, ref, computed, dll)
+    ".nuxt/nuxt.d.ts",
+    ".nuxt/types/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".output",
+    // JANGAN exclude .nuxt — folder ini berisi auto-import types
+    // yang membuat useHead, useState, dll dikenali tanpa import manual
+    "dist"
+  ]
 }

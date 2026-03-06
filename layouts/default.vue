@@ -1,18 +1,8 @@
 <template>
-  <div>
-    <slot />
-    <Footer v-if="shouldShowFooter" />
-    <ScrollToTop />
+  <div class="relative min-h-screen" style="background: var(--bg-primary); color: var(--text-primary);">
+    <div class="fixed inset-0 speed-lines pointer-events-none z-0" />
+    <div class="relative z-10">
+      <slot />
+    </div>
   </div>
 </template>
-
-<script>
-export default {
-  computed: {
-    shouldShowFooter() {
-      return !this.$route.path.includes('guest');
-      // return !['/guest', '/login'].includes(this.$route.path);
-    },
-  },
-};
-</script>

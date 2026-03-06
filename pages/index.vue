@@ -1,17 +1,24 @@
+<template>
+  <div
+    class="landing-page"
+    style="color:var(--text-primary);"
+  >
+    <LandingNavbar />
+    <LandingHero />
+    <LandingMiddleSections />
+    <LandingBottomSections />
+  </div>
+</template>
+
 <script setup lang="ts">
+import { useAccentColor } from '~/composables/useAccentColor'
 
 useHead({
-  title: "Linkdung",
-  meta: [{ name: "Easy Collapse Your Link", content: "Dashboard." }],
-  bodyAttrs: {
-    class: "test",
-  },
-});
-</script>
+  title: 'Linkdung — One Link to Rule Them All',
+  meta: [{ name: 'description', content: 'Link-in-bio platform.' }],
+})
 
-<template>
-  <ScrollUp />
-  <Hero />
-  <Features />
-  <Guest />
-</template>
+// Ensure accent color is applied on this page too
+const { initAccentColor } = useAccentColor()
+onMounted(() => initAccentColor())
+</script>
