@@ -127,7 +127,7 @@ const { allLinks, visibleLinks, totalClicks, profile } = storeToRefs(store)
 const { isDark } = storeToRefs(useThemeStore())
 
 const chartType = ref<'bar' | 'line' | 'pie'>('bar')
-const chartTypes = [
+const chartTypes: Array<{ value: 'bar' | 'line' | 'pie', label: string, icon: string }> = [
   { value: 'bar', label: 'Bar', icon: '📊' },
   { value: 'line', label: 'Line', icon: '📈' },
   { value: 'pie', label: 'Pie', icon: '🥧' },

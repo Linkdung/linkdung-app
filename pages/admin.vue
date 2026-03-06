@@ -25,37 +25,26 @@
           <NuxtLink
             to="/profile"
             target="_blank"
-            class="btn-ghost px-4 py-2 font-display text-base no-underline"
+            class="btn-ghost px-4 py-2 font-display text-base no-underline flex items-center gap-2"
           >
             <IconEye :size="18" />
             <span>Preview</span>
           </NuxtLink>
           <button
-            class="btn-comic px-6 py-2 font-display text-lg text-white"
+            class="btn-comic px-6 py-2 font-display text-lg text-white flex items-center gap-2"
             style="background:var(--accent-primary);border-color:#000;box-shadow:4px 4px 0 #000;"
-            :disabled="store.isLoading"
+            :disabled="store.isLoading || !store.isDirty"
             @click="store.saveProfile()"
           >
-            <div
+            <IconHourglass
               v-if="store.isLoading"
-              class="flex flex-row gap-x-2"
-            >
-              <IconHourglass
-                :size="18"
-                class="mt-1"
-              />
-              <span>Saving...</span>
-            </div>
-            <div
+              :size="18"
+            />
+            <IconSave
               v-else
-              class="flex flex-row gap-x-2"
-            >
-              <IconSave
-                :size="18"
-                class="mt-1"
-              />
-              <span>Save</span>
-            </div>
+              :size="18"
+            />
+            <span>{{ store.isLoading ? 'Saving...' : 'Save' }}</span>
           </button>
         </div>
       </div>
@@ -64,16 +53,24 @@
       <Transition name="slide-down">
         <div
           v-if="store.isDirty"
-          class="comic-panel px-4 py-3 mb-6 flex items-center gap-3"
+          class="comic-panel px-4 py-3 mb-6 flex items-center justify-between gap-3"
           style="background:#FFD700;border-color:#000;"
         >
-          <IconTriangleAlert
-            :size="28"
-            color="black"
-          />
-          <p class="font-comic font-bold text-sm text-black">
-            Unsaved changes — remember to save!
-          </p>
+          <div class="flex items-center gap-3">
+            <IconTriangleAlert
+              :size="28"
+              color="black"
+            />
+            <p class="font-comic font-bold text-sm text-black">
+              Unsaved changes — remember to save!
+            </p>
+          </div>
+          <button
+            class="font-comic font-bold text-xs text-black underline underline-offset-2 hover:opacity-70 flex-shrink-0"
+            @click="store.discardDraft()"
+          >
+            Discard
+          </button>
         </div>
       </Transition>
 
@@ -142,7 +139,12 @@ const store = useProfileStore()
 const { allLinks } = storeToRefs(store)
 const { initAccentColor } = useAccentColor()
 
-onMounted(() => initAccentColor())
+onMounted(() => {
+  // Init from published (not draft) so CSS vars match the saved state
+  initAccentColor()
+  // Sync draft to current published on mount (in case of stale draft)
+  store.discardDraft()
+})
 
 const activeTab = ref('links')
 const tabs = [
@@ -161,16 +163,7 @@ function executeDelete() {
 </script>
 
 <style scoped>
-.slide-down-enter-active {
-  animation: pop-in 0.3s ease;
-}
-
-.slide-down-leave-active {
-  transition: opacity 0.2s, transform 0.2s;
-}
-
-.slide-down-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
-}
+.slide-down-enter-active { animation: pop-in 0.3s ease; }
+.slide-down-leave-active { transition: opacity 0.2s, transform 0.2s; }
+.slide-down-leave-to { opacity: 0; transform: translateY(-10px); }
 </style>

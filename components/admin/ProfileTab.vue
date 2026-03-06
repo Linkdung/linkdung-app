@@ -10,8 +10,9 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label class="font-comic font-bold text-xs block mb-1">Display Name</label>
+          <!-- [CHANGE] v-model ke draft, bukan profile (published) -->
           <input
-            v-model="profile.displayName"
+            v-model="draft.displayName"
             class="input-comic"
             placeholder="Your name"
           />
@@ -23,8 +24,9 @@
               class="font-comic font-bold"
               style="color:var(--text-muted);"
             >@</span>
+            <!-- [CHANGE] v-model ke draft -->
             <input
-              v-model="profile.username"
+              v-model="draft.username"
               class="input-comic flex-1"
               placeholder="username"
             />
@@ -33,8 +35,9 @@
       </div>
       <div class="mt-4">
         <label class="font-comic font-bold text-xs block mb-1">Bio</label>
+        <!-- [CHANGE] v-model ke draft -->
         <textarea
-          v-model="profile.bio"
+          v-model="draft.bio"
           class="input-comic resize-none"
           rows="3"
           maxlength="200"
@@ -43,21 +46,24 @@
           class="text-xs font-comic text-right mt-1"
           style="color:var(--text-muted);"
         >
-          {{ profile.bio.length }}/200
+          <!-- [CHANGE] draft.bio.length -->
+          {{ draft.bio.length }}/200
         </p>
       </div>
       <div class="mt-4">
         <label class="font-comic font-bold text-xs block mb-1">Avatar URL</label>
+        <!-- [CHANGE] v-model ke draft -->
         <input
-          v-model="profile.avatar"
+          v-model="draft.avatar"
           class="input-comic"
           placeholder="https://..."
         />
       </div>
       <div class="mt-4 flex items-center gap-3">
+        <!-- [CHANGE] v-model ke draft -->
         <input
           id="isPublic"
-          v-model="profile.isPublic"
+          v-model="draft.isPublic"
           type="checkbox"
           class="toggle-comic"
         />
@@ -76,8 +82,9 @@
         SOCIAL LINKS
       </h2>
       <div class="space-y-3 mb-4">
+        <!-- [CHANGE] Iterasi draft.socialLinks -->
         <div
-          v-for="social in profile.socialLinks"
+          v-for="social in draft.socialLinks"
           :key="social.id"
         >
           <div class="flex items-center gap-2">
@@ -87,7 +94,7 @@
               style="color:var(--accent-primary);"
             >
               <component
-                :is="iconMap[social.platform as keyof typeof iconMap]"
+                :is="iconMap[social.platform as keyof typeof iconMap] ?? iconMap.Custom"
                 :size="24"
               />
             </span>
@@ -153,7 +160,8 @@ import { useProfileStore } from '~/stores/profile'
 const iconMap = markRaw({ Instagram, Facebook, Twitter, Tiktok, Spotify, Youtube, Github, Linkedin, Discord, Twitch, Gmail, Custom })
 
 const store = useProfileStore()
-const { profile } = storeToRefs(store)
+// [CHANGE] Ambil draft, bukan profile — semua v-model di template ini menulis ke draft
+const { draft } = storeToRefs(store)
 
 const socialErrors = ref<Record<string, string>>({})
 
