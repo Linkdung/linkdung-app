@@ -1,16 +1,26 @@
 <template>
   <div class="comic-panel p-6">
-    <h2
-      class="font-display text-2xl mb-5"
-      style="color:var(--accent-primary);"
-    >
-      <IconPlus
-        :size="20"
-        class="bold inline-block"
-        stroke-width="3"
-      />
-      ADD NEW LINK
-    </h2>
+    <div class="flex items-center justify-between mb-5">
+      <h2
+        class="font-display text-2xl py-1"
+        style="color:var(--accent-primary);"
+      >
+        <IconPlus
+          :size="20"
+          class="bold inline-block"
+          stroke-width="3"
+        />
+        ADD NEW LINK
+      </h2>
+
+      <button
+        class="btn-comic px-3 py-1 font-display text-sm"
+        style="background:var(--color-error);color:#fff;border-color:#000;box-shadow:3px 3px 0 #000;"
+        @click="reset"
+      >
+        Reset
+      </button>
+    </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
       <div>
@@ -48,7 +58,15 @@
           >
             {{ form.emoji ? 'Change emoji' : 'Pick an emoji' }}
           </span>
-          <span>{{ showEmoji ? '▴' : '▾' }}</span>
+          <IconTriangle
+            v-if="showEmoji"
+            :size="10"
+          />
+          <IconTriangle
+            v-else
+            :size="10"
+            style="transform: rotate(180deg);"
+          />
         </button>
         <Transition name="dropdown">
           <div
@@ -226,6 +244,11 @@ function submit() {
     description: form.description, style: form.style as LinkItem['style'],
     customColor: form.customColor, isVisible: true, isHighlighted: false,
   })
+  Object.assign(form, { title: '', url: '', emoji: '', description: '', style: 'default', customColor: '#FFFFFF' })
+  showEmoji.value = false
+}
+
+function reset() {
   Object.assign(form, { title: '', url: '', emoji: '', description: '', style: 'default', customColor: '#FFFFFF' })
   showEmoji.value = false
 }

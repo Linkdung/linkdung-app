@@ -1,34 +1,44 @@
 <template>
-  <div class="comic-panel p-6">
-    <div class="flex items-center justify-between mb-2">
-      <h2
-        class="font-display text-2xl"
-        style="color:var(--accent-primary);"
-      >
-        MY LINKS
-      </h2>
-      <div class="flex items-center gap-2">
-        <span
-          class="font-comic text-xs px-2 py-1 border-2 border-black font-bold"
-          style="background:#FFD700;color:#000;"
-        >
-          {{ links.filter(l => l.isVisible).length }} visible
-        </span>
-        <span
-          class="font-comic text-xs px-2 py-1 border-2 border-black font-bold"
-          style="background:var(--bg-secondary);"
-        >
-          {{ links.length }} total
-        </span>
-      </div>
-    </div>
-    <p
-      v-for="item in subtitles"
-      :key="item.label"
-      class="font-comic text-xs mb-4 inline-block gap-x-5 cursor-default"
-      style="color:var(--text-muted);"
+  <!-- Skeleton: tampil saat SSR / sebelum client hydrated -->
+  <SkeletonLinkListSkeleton
+    v-if="!isReady"
+    :count="links.length || 3"
+  />
+
+  <Transition name="list-fade">
+    <div
+      v-if="isReady"
+      class="comic-panel p-6"
     >
-      <ClientOnly>
+      <div class="flex items-center justify-between mb-2">
+        <h2
+          class="font-display text-2xl"
+          style="color:var(--accent-primary);"
+        >
+          MY LINKS
+        </h2>
+        <div class="flex items-center gap-2">
+          <span
+            class="font-comic text-xs px-2 py-1 border-2 border-black font-bold"
+            style="background:#FFD700;color:#000;"
+          >
+            {{ links.filter(l => l.isVisible).length }} visible
+          </span>
+          <span
+            class="font-comic text-xs px-2 py-1 border-2 border-black font-bold"
+            style="background:var(--bg-secondary);"
+          >
+            {{ links.length }} total
+          </span>
+        </div>
+      </div>
+
+      <p
+        v-for="item in subtitles"
+        :key="item.label"
+        class="font-comic text-xs mb-4 inline-block gap-x-5 cursor-default"
+        style="color:var(--text-muted);"
+      >
         <component
           :is="iconMap[item.icon as keyof typeof iconMap]"
           :size="12"
@@ -36,10 +46,8 @@
           stroke-width="3"
         />
         {{ item.label }}
-      </ClientOnly>
-    </p>
+      </p>
 
-    <ClientOnly>
       <div
         v-if="links.length === 0"
         class="text-center py-12 border-3 border-dashed"
@@ -97,8 +105,8 @@
           </div>
         </div>
       </TransitionGroup>
-    </ClientOnly>
-  </div>
+    </div>
+  </Transition>
 </template>
 
 <script setup lang="ts">
@@ -114,7 +122,7 @@ const iconMap = markRaw({ ArrowUpDown, Eye, Star, Trash })
 const subtitles = [
   { icon: 'ArrowUpDown', label: 'Reorder' },
   { icon: 'Eye', label: 'Toggle Visible' },
-  { icon: 'Star', label: 'Hightlight' },
+  { icon: 'Star', label: 'Highlight' },
   { icon: 'Trash', label: 'Delete' },
 ]
 
@@ -122,6 +130,10 @@ defineProps<{ links: LinkItem[] }>()
 defineEmits<{ delete: [id: string, title: string] }>()
 
 const store = useProfileStore()
+
+// isReady: skeleton tampil di server/hydration, konten asli fade-in setelah mount
+const isReady = ref(false)
+onMounted(() => { isReady.value = true })
 
 function moveItem(arr: LinkItem[], index: number, direction: -1 | 1): LinkItem[] {
   const copy = [...arr]
@@ -137,4 +149,7 @@ function moveItem(arr: LinkItem[], index: number, direction: -1 | 1): LinkItem[]
 .link-list-enter-from   { opacity: 0; transform: translateY(-10px); }
 .link-list-leave-to     { opacity: 0; transform: translateX(20px); }
 .link-list-move         { transition: transform 0.3s ease; }
+
+.list-fade-enter-active { transition: opacity 0.3s ease; }
+.list-fade-enter-from   { opacity: 0; }
 </style>
