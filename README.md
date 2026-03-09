@@ -91,13 +91,13 @@ linkdung/
 ### Colors
 
 ```css
---spider-red:    #E23636   /* Miles' red */
---spider-blue:   #1A3A6B   /* City night */
---spider-yellow: #FFD700   /* Web gold */
---spider-pink:   #FF2D78   /* Gwen's dimension */
---spider-purple: #7B2FBE   /* Spider-Noir */
---spider-cyan:   #00D4FF   /* 2099 */
---spider-ink:    #1A1A2E   /* Panel black */
+--red:    #E23636   /* Miles' red */
+--blue:   #1A3A6B   /* City night */
+--yellow: #FFD700   /* Web gold */
+--pink:   #FF2D78   /* Gwen's dimension */
+--purple: #7B2FBE   /* Noir */
+--cyan:   #00D4FF   /* 2099 */
+--ink:    #1A1A2E   /* Panel black */
 ```
 
 ### Cartoon Shadow Classes
