@@ -23,6 +23,14 @@
         </div>
         <div class="flex gap-3 items-center">
           <NuxtLink
+            to="/"
+            target="_self"
+            class="btn-ghost px-4 py-2 font-display text-base no-underline flex items-center gap-2"
+          >
+            <IconHouse :size="18" />
+            <span>Back to Home</span>
+          </NuxtLink>
+          <NuxtLink
             to="/profile"
             target="_blank"
             class="btn-ghost px-4 py-2 font-display text-base no-underline flex items-center gap-2"

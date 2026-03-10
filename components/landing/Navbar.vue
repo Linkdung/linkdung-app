@@ -19,6 +19,7 @@
           >Linkdung</span>
         </ClientOnly>
       </a>
+
       <div class="hidden md:flex items-center gap-6">
         <a
           v-for="link in navLinks"
@@ -28,28 +29,40 @@
           style="color:var(--text-primary);"
         >{{ link.label }}</a>
       </div>
+
       <div class="flex items-center gap-3">
+        <!-- Theme toggle — tidak berubah -->
         <button
           class="btn-ghost px-3 py-2 font-display text-sm hidden md:block"
           @click="themeStore.toggleTheme()"
         >
           <IconSun
             v-if="isDark"
-            :size="28"
+            :size="24"
             style="color:var(--accent-primary);"
           />
           <IconMoon
             v-else
-            :size="28"
+            :size="24"
             style="color:var(--accent-primary);"
           />
         </button>
+
+        <!-- [CHANGE] Log In — ghost button (baru) -->
         <NuxtLink
-          to="/admin"
+          to="/login?mode=login"
+          class="btn-ghost px-4 py-2 font-display text-base no-underline hidden sm:inline-flex"
+        >
+          Log In
+        </NuxtLink>
+
+        <!-- [CHANGE] Get Started → Sign Up Free + arahkan ke /login?mode=signup -->
+        <NuxtLink
+          to="/login?mode=signup"
           class="btn-comic px-5 py-2 font-display text-base no-underline text-white"
           style="background:var(--accent-primary); border-color:#000; box-shadow:4px 4px 0 #000;"
         >
-          Get Started
+          Sign Up Free
         </NuxtLink>
       </div>
     </div>
