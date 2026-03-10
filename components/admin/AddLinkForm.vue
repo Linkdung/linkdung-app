@@ -58,6 +58,12 @@
           >
             {{ form.emoji ? 'Change emoji' : 'Pick an emoji' }}
           </span>
+          <IconX
+            v-if="form.emoji"
+            :size="16"
+            class="text-gray-500 hover:text-gray-700 transition-colors"
+            @click.stop="form.emoji = ''"
+          />
           <IconTriangle
             v-if="showEmoji"
             :size="10"
