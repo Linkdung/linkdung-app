@@ -1,12 +1,5 @@
 <template>
   <div class="min-h-screen">
-    <!-- Skeleton: tampil sampai onMounted selesai (SSR/hydration safe) -->
-    <SkeletonProfileSkeleton
-      v-if="!isReady"
-      :count="visibleLinks.length || 4"
-    />
-
-    <!-- Konten asli: fade-in setelah hydrated -->
     <Transition name="profile-fade">
       <div
         v-if="isReady"
@@ -169,14 +162,18 @@ const profileStore = useProfileStore()
 const { profile, visibleLinks, totalClicks } = storeToRefs(profileStore)
 const { initAccentColor } = useAccentColor()
 
-// isReady: false saat SSR / sebelum hydration selesai — skeleton tampil dulu
-const isReady = ref(false)
+// isReady: TRUE saat SSR (konten dirender server) — skeleton hanya muncul di client
+// ClientOnly wrapper di template memastikan skeleton tidak di-render SSR
+// sehingga tidak ada hydration mismatch
+const isReady = ref(true)
 
 onMounted(() => {
   initAccentColor()
-  // Sedikit delay agar TransitionGroup tidak "pop" langsung —
-  // terasa seperti load yang intentional, bukan flicker
-  setTimeout(() => { isReady.value = true }, 150)
+  // Reset ke false lalu true untuk trigger fade-in transition di client
+  isReady.value = false
+  nextTick(() => {
+    setTimeout(() => { isReady.value = true }, 150)
+  })
 })
 
 useHead({
