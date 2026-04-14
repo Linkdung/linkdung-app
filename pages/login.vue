@@ -535,10 +535,9 @@ useHead({ title: 'Login | Linkdung' })
 const route = useRoute()
 const mode = ref<'signup' | 'login'>(route.query.mode === 'login' ? 'login' : 'signup')
 
-// ── Login / Signup ───────────────────────────────────────
+// ── Form state ───────────────────────────────────────────
 const form = reactive({ name: '', email: '', password: '' })
 const showPassword = ref(false)
-const isLoading = ref(false)
 const errorMsg = ref('')
 
 // ── Forgot password ──────────────────────────────────────
@@ -549,7 +548,7 @@ const forgotSent = ref(false)
 const forgotError = ref('')
 
 function flipToForgot() {
-  forgotEmail.value = form.email // pre-fill kalau sudah ada
+  forgotEmail.value = form.email
   forgotSent.value = false
   forgotError.value = ''
   showForgot.value = true
@@ -586,17 +585,38 @@ const webPaths = (() => {
   return paths
 })()
 
-// ── Auth ─────────────────────────────────────────────────
+// ── Auth mutations ───────────────────────────────────────
+const { mutate: register, isPending: registerPending, error: registerError } = useRegisterMutation()
+const { mutate: login, isPending: loginPending, error: loginError } = useLoginMutation()
+
+const isLoading = computed(() => registerPending.value || loginPending.value)
+
+watch([registerError, loginError], ([regErr, logErr]) => {
+  const err = regErr || logErr
+  if (err) errorMsg.value = (err as Error).message ?? 'Something went wrong.'
+})
+
 async function handleEmail() {
   errorMsg.value = ''
-  if (!form.email || !form.password) { errorMsg.value = 'Email and password are required.'; return }
-  if (mode.value === 'signup' && !form.name) { errorMsg.value = 'Please enter your display name.'; return }
-  isLoading.value = true
-  await new Promise(r => setTimeout(r, 900))
-  isLoading.value = false
+
+  if (!form.email || !form.password) {
+    errorMsg.value = 'Email and password are required.'
+    return
+  }
+
+  if (mode.value === 'signup') {
+    if (!form.name) { errorMsg.value = 'Please enter your display name.'; return }
+
+    register({ name: form.name, email: form.email, password: form.password })
+  }
+  else {
+    // name tidak dipakai saat login, kirim string kosong sesuai UserInput! yang required
+    login({ name: '', email: form.email, password: form.password })
+  }
 }
+
 function handleOAuth(provider: 'google' | 'github' | 'discord') {
-  console.log('OAuth:', provider)
+  navigateTo(`/api/auth/${provider}`, { external: true })
 }
 </script>
 

@@ -1,5 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import graphqlLoader from 'vite-plugin-graphql-loader'
 
 export default defineNuxtConfig({
 
@@ -62,19 +61,14 @@ export default defineNuxtConfig({
   },
 
   // ─── Vite ─────────────────────────────────────────────────────────────────
-  // [CHANGE] graphqlLoader: transform import '*.gql' → DocumentNode
-  //   - Resolve fragment #import directive lintas file
-  //   - Output siap pakai Apollo client.query() / client.mutate()
-  //
-  // Install satu kali:
-  //   npm i -D vite-plugin-graphql-loader
+  // @nuxtjs/apollo otomatis menambahkan @rollup/plugin-graphql yang handle:
+  //   - import '*.gql' → DocumentNode
+  //   - #import directive lintas file
+  // Tidak perlu vite-plugin-graphql-loader (akan bentrok / double transform)
   vite: {
     optimizeDeps: {
       include: ['echarts', 'vue-echarts'],
     },
-    plugins: [
-      graphqlLoader(),
-    ],
   },
 
   // ─── TypeScript ──────────────────────────────────────────────────────────
@@ -87,11 +81,8 @@ export default defineNuxtConfig({
   apollo: {
     clients: {
       default: {
-        httpEndpoint: process.env.GRAPHQL_ENDPOINT || 'http://localhost:4000/graphql',
+        httpEndpoint: process.env.GRAPHQL_ENDPOINT || 'https://linkdung-service-nolepdev.koyeb.app/query',
         wsEndpoint: process.env.GRAPHQL_WS_ENDPOINT || 'ws://localhost:4000/graphql',
-        httpLinkOptions: {
-          credentials: 'include',
-        },
         tokenStorage: 'cookie',
         authType: 'Bearer',
         authHeader: 'Authorization',
