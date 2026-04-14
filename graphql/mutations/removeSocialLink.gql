@@ -1,0 +1,5 @@
+mutation RemoveSocialLink($id: ID!) {
+  socialLink {
+    remove(id: $id)
+  }
+}

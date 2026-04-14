@@ -106,7 +106,7 @@
             <ClientOnly>
               <div
                 class="h-full transition-all duration-500"
-                :style="{ width: maxClicks > 0 ? (link.clicks/maxClicks*100)+'%' : '0%', background: 'var(--accent-primary)' }"
+                :style="{ width: maxClicks > 0 ? (link.clicks/maxClicks*100)+'%' : '0%', background: link.customColor || link.style }"
               />
             </ClientOnly>
           </div>

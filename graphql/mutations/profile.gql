@@ -1,0 +1,94 @@
+#import "../fragments/profile.gql"
+
+# ─── Profile mutations ───────────────────────────────────────────────────────
+
+# saveProfile() di store — commit draft → published
+mutation UpdateProfile($input: UpdateProfileInput!) {
+  profile {
+    update(input: $input) {
+      ...ProfileAdmin
+    }
+  }
+}
+
+# ─── Link CRUD ───────────────────────────────────────────────────────────────
+
+mutation AddLink($input: AddLinkInput!) {
+  link {
+    add(input: $input) {
+      ...LinkItemFields
+    }
+  }
+}
+
+mutation UpdateLink($id: ID!, $input: UpdateLinkInput!) {
+  link {
+    update(id: $id, input: $input) {
+      ...LinkItemFields
+    }
+  }
+}
+
+mutation RemoveLink($id: ID!) {
+  link {
+    remove(id: $id)
+  }
+}
+
+# Reorder — kirim array id dengan urutan baru
+mutation ReorderLinks($ids: [ID!]!) {
+  link {
+    reorder(ids: $ids) {
+      id
+      order
+    }
+  }
+}
+
+# Toggle visibility / highlight — pisah dari UpdateLink supaya optimistic update
+# bisa langsung balik tanpa refetch seluruh data
+mutation ToggleLinkVisibility($id: ID!) {
+  link {
+    toggleVisibility(id: $id) {
+      id
+      isVisible
+    }
+  }
+}
+
+mutation ToggleLinkHighlight($id: ID!) {
+  link {
+    toggleHighlight(id: $id) {
+      id
+      isHighlighted
+    }
+  }
+}
+
+# ─── Social links ────────────────────────────────────────────────────────────
+
+mutation AddSocialLink($input: AddSocialLinkInput!) {
+  socialLink {
+    add(input: $input) {
+      ...SocialLinkFields
+    }
+  }
+}
+
+mutation RemoveSocialLink($id: ID!) {
+  socialLink {
+    remove(id: $id)
+  }
+}
+
+# ─── Analytics ───────────────────────────────────────────────────────────────
+
+# recordClick() — fire-and-forget, tidak perlu return data besar
+mutation RecordClick($linkId: ID!) {
+  analytics {
+    recordClick(linkId: $linkId) {
+      linkId
+      clicks
+    }
+  }
+}

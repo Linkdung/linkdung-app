@@ -45,7 +45,7 @@
           </p>
           <div class="flex flex-wrap gap-4">
             <NuxtLink
-              to="/admin"
+              to="/login?mode=signup"
               class="btn-comic font-display text-xl px-8 py-4 no-underline text-white"
               style="background:var(--accent-primary); border-color:#000; box-shadow:6px 6px 0 #000;"
             >

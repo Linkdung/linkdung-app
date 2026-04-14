@@ -1,0 +1,8 @@
+mutation RecordClick($linkId: ID!) {
+  analytics {
+    recordClick(linkId: $linkId) {
+      linkId
+      clicks
+    }
+  }
+}

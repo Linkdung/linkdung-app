@@ -1,0 +1,5 @@
+query CheckUsername($username: String!) {
+  profile {
+    isUsernameAvailable(username: $username)
+  }
+}

@@ -1,8 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import graphqlLoader from 'vite-plugin-graphql-loader'
+
 export default defineNuxtConfig({
 
   // ─── Modules ─────────────────────────────────────────────────────────────
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@vueuse/nuxt', '@nuxtjs/apollo', '@nuxt/eslint', 'nuxt-lucide-icons'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@pinia/nuxt',
+    '@vueuse/nuxt',
+    '@nuxtjs/apollo',
+    '@nuxt/eslint',
+    'nuxt-lucide-icons',
+  ],
   devtools: { enabled: true },
 
   // ─── App Config ───────────────────────────────────────────────────────────
@@ -17,15 +26,8 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
-        {
-          rel: 'preconnect',
-          href: 'https://fonts.googleapis.com',
-        },
-        {
-          rel: 'preconnect',
-          href: 'https://fonts.gstatic.com',
-          crossorigin: '',
-        },
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&family=Permanent+Marker&display=swap',
@@ -39,16 +41,10 @@ export default defineNuxtConfig({
   // ─── CSS ─────────────────────────────────────────────────────────────────
   css: ['~/assets/css/main.css'],
 
-  // ─── TanStack Query via plugins ───────────────────────────────────────────
-  // Configured in plugins/vue-query.ts
-
   // ─── Runtime Config ───────────────────────────────────────────────────────
   runtimeConfig: {
-    // Private (server-side only)
     jwtSecret: process.env.JWT_SECRET || 'super-secret-change-in-prod',
     databaseUrl: process.env.DATABASE_URL || '',
-
-    // Public (exposed to client)
     public: {
       appName: 'Linkdung',
       appUrl: process.env.APP_URL || 'http://localhost:3000',
@@ -66,10 +62,19 @@ export default defineNuxtConfig({
   },
 
   // ─── Vite ─────────────────────────────────────────────────────────────────
+  // [CHANGE] graphqlLoader: transform import '*.gql' → DocumentNode
+  //   - Resolve fragment #import directive lintas file
+  //   - Output siap pakai Apollo client.query() / client.mutate()
+  //
+  // Install satu kali:
+  //   npm i -D vite-plugin-graphql-loader
   vite: {
     optimizeDeps: {
       include: ['echarts', 'vue-echarts'],
     },
+    plugins: [
+      graphqlLoader(),
+    ],
   },
 
   // ─── TypeScript ──────────────────────────────────────────────────────────

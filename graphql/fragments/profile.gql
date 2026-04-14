@@ -1,0 +1,64 @@
+# ─── Core fragments — reused di queries & mutations ─────────────────────────
+
+fragment SocialLinkFields on SocialLink {
+  id
+  platform
+  url
+  label
+}
+
+fragment LinkItemFields on LinkItem {
+  id
+  title
+  url
+  description
+  emoji
+  isVisible
+  isHighlighted
+  style
+  customColor
+  order
+  clicks
+  createdAt
+}
+
+fragment ProfileCore on Profile {
+  username
+  displayName
+  bio
+  avatar
+  accentColor
+  backgroundType
+  backgroundValue
+  isPublic
+  verifiedAt
+  totalClicks
+  socialLinks {
+    ...SocialLinkFields
+  }
+}
+
+# Versi ringan — untuk public /profile page (tidak butuh backgroundValue dll)
+fragment ProfilePublic on Profile {
+  username
+  displayName
+  bio
+  avatar
+  accentColor
+  isPublic
+  verifiedAt
+  socialLinks {
+    ...SocialLinkFields
+  }
+  links(filter: { isVisible: true }, orderBy: { field: order, dir: ASC }) {
+    ...LinkItemFields
+  }
+}
+
+# Versi lengkap — untuk admin (semua link termasuk hidden)
+fragment ProfileAdmin on Profile {
+  ...ProfileCore
+  links(orderBy: { field: order, dir: ASC }) {
+    ...LinkItemFields
+  }
+}

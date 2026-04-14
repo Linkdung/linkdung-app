@@ -315,7 +315,7 @@ const iconMap = markRaw({ Link, ArrowUpDown, Palette, BarChart2, Eye, Star, Smar
 
 const marqueeItems = [
   { icon: 'Crown', label: 'LINK IN BIO' },
-  { icon: 'ArrowUpDown', label: 'DRAG AND DROP' },
+  { icon: 'ArrowUpDown', label: 'REORDER LINK' },
   { icon: 'Palette', label: 'FULL CUSTOMIZATION' },
   { icon: 'BarChart2', label: 'ANALYTICS' },
   { icon: 'Moon', label: 'DARK MODE' },
@@ -324,7 +324,7 @@ const marqueeItems = [
 ]
 const features = [
   { icon: 'Link', title: 'Unlimited Links', desc: 'Add as many links as you want. No limits, no caps, no excuses.' },
-  { icon: 'ArrowUpDown', title: 'Drag & Drop', desc: 'Reorder links with a simple drag. Your layout, your way.' },
+  { icon: 'ArrowUpDown', title: 'Reorder Link', desc: 'Reorder links with a simple move. Your layout, your way.' },
   { icon: 'Palette', title: 'Custom Themes', desc: 'Pick your accent color, toggle dark/light, choose card styles — even custom hex.' },
   { icon: 'BarChart2', title: 'Click Analytics', desc: 'Track every click with bar, line, or pie charts on your dashboard.' },
   { icon: 'Eye', title: 'Show / Hide Links', desc: 'Toggle individual links on or off without deleting them.' },

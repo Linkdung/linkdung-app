@@ -1,0 +1,48 @@
+#import "../fragments/profile.gql"
+
+# ─── Public profile page (/profile) ─────────────────────────────────────────
+# Mapping ke DEFAULT_PROFILE untuk /pages/profile.vue
+# Hanya fetch visible links — lebih ringan dari versi admin
+
+query GetPublicProfile($username: String!) {
+  profile {
+    getByUsername(username: $username) {
+      ...ProfilePublic
+    }
+  }
+}
+
+# ─── Admin dashboard (/admin) ────────────────────────────────────────────────
+# Fetch semua link termasuk hidden, plus metadata lengkap
+
+query GetAdminProfile {
+  profile {
+    me {
+      ...ProfileAdmin
+    }
+  }
+}
+
+# ─── Analytics — terpisah supaya polling tidak reload semua data ─────────────
+
+query GetProfileAnalytics($username: String!) {
+  profile {
+    getByUsername(username: $username) {
+      totalClicks
+      links(orderBy: { field: clicks, dir: DESC }) {
+        id
+        title
+        clicks
+        createdAt
+      }
+    }
+  }
+}
+
+# ─── Check username availability (sign-up flow) ──────────────────────────────
+
+query CheckUsername($username: String!) {
+  profile {
+    isUsernameAvailable(username: $username)
+  }
+}

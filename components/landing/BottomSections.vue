@@ -187,12 +187,13 @@
               <span :style="feat.startsWith('✗') ? 'color:var(--text-muted);' : 'color:var(--text-primary);'">{{ feat.replace('✗ ', '') }}</span>
             </li>
           </ul>
-          <button
+          <NuxtLink
+            :to="plan.name === 'Free' ? '/login?mode=signup' : ''"
             class="btn-comic w-full font-display text-base py-3"
             :style="plan.featured ? 'background:var(--accent-primary); color:#fff; border-color:#000; box-shadow:4px 4px 0 #000;' : ''"
           >
             {{ plan.cta }}
-          </button>
+          </NuxtLink>
         </div>
       </div>
     </div>
@@ -365,7 +366,7 @@ const templates = [
 ]
 const testimonials = [
   { name: 'Asep K.', role: 'Content Creator', text: 'Finally a link-in-bio tool that doesn\'t look like every other boring white card. My followers keep asking how I made it.', shadowColor: 'var(--accent-primary)', avatarBg: '#E23636' },
-  { name: 'Memet P.', role: 'Freelance Designer', text: 'The drag-and-drop is buttery smooth. I reorder my links every week and it takes literally 5 seconds.', shadowColor: '#1A3A6B', avatarBg: '#1A3A6B' },
+  { name: 'Memet P.', role: 'Freelance Designer', text: 'The move link is buttery smooth. I reorder my links every week and it takes literally 5 seconds.', shadowColor: '#1A3A6B', avatarBg: '#1A3A6B' },
   { name: 'Dimas T.', role: 'Musician', text: 'I switched from another tool and my click rate went up 40%. Just makes people want to click.', shadowColor: '#FF2D78', avatarBg: '#FF2D78' },
   { name: 'Budiono S.', role: 'Startup Founder', text: 'The analytics dashboard alone is worth it. Bar, line, and pie chart — I can see exactly which links drive traffic.', shadowColor: '#FFD700', avatarBg: '#7B2FBE' },
   { name: 'Mega W.', role: 'Instagram Influencer', text: 'The emoji + color picker is such a fun combo. I spent way too long styling my links but the result is 🔥', shadowColor: '#16A34A', avatarBg: '#16A34A' },
@@ -382,7 +383,7 @@ const pricingPlans = [
 const faqs = [
   { q: 'Is Linkdung really free?', a: 'Yes! The Free plan is genuinely free forever. No trial, no credit card. Unlimited links and basic analytics at no cost.' },
   { q: 'Can I use a custom domain?', a: 'Custom domains are on the Pro plan. Point any domain you own to your Linkdung profile.' },
-  { q: 'How does the drag-and-drop work?', a: 'Grab the ☰ handle on any link card and drag it up or down. The order saves automatically.' },
+  { q: 'How does the move link work?', a: 'Click arrow to mode link up and down. The order saves automatically.' },
   { q: 'What chart types are in analytics?', a: 'Bar, Line, and Pie — switchable with one click. Each link\'s color in the chart matches its card style.' },
   { q: 'Can I use any color for my links?', a: 'Yes! Choose from 5 preset styles or use the custom color picker for any hex color you want, per link.' },
   { q: 'Does the accent color change everything?', a: 'Yes — changing your accent color in Admin → Look updates buttons, shadows, marquee, hero section, charts, and every primary-colored element site-wide, instantly.' },

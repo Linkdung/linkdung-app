@@ -1,0 +1,9 @@
+#import "../fragments/profile.gql"
+
+query GetAdminProfile {
+  profile {
+    me {
+      ...ProfileAdmin
+    }
+  }
+}

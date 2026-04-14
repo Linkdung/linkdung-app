@@ -1,0 +1,9 @@
+#import "../fragments/profile.gql"
+
+query GetPublicProfile($username: String!) {
+  profile {
+    getByUsername(username: $username) {
+      ...ProfilePublic
+    }
+  }
+}
