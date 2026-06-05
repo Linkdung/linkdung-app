@@ -22,14 +22,68 @@
           </p>
         </div>
         <div class="flex gap-3 items-center">
-          <NuxtLink
-            to="/"
-            target="_self"
-            class="btn-ghost px-4 py-2 font-display text-base no-underline flex items-center gap-2"
-          >
-            <IconHouse :size="18" />
-            <span>Back to Home</span>
-          </NuxtLink>
+          <ClientOnly>
+            <template v-if="isAuthenticated">
+              <div
+                ref="menuRef"
+                class="relative"
+              >
+                <button
+                  class="btn-ghost px-4 py-2 font-display text-base flex items-center gap-2"
+                  style="color:var(--accent-primary);"
+                  @click="open = !open"
+                >
+                  <IconUser :size="16" />
+                  <span>{{ userName }}</span>
+                  <IconChevronDown
+                    :size="14"
+                    :class="open ? 'rotate-180' : ''"
+                    class="transition-transform duration-200"
+                  />
+                </button>
+
+                <!-- Dropdown -->
+                <Transition name="dropdown">
+                  <div
+                    v-if="open"
+                    class="absolute right-0 top-full mt-2 w-44 comic-panel py-1"
+                    style="box-shadow:4px 4px 0 var(--border-color); z-index:100;"
+                  >
+                    <NuxtLink
+                      to="/"
+                      class="flex items-center gap-2 px-4 py-2 font-comic font-bold text-sm no-underline hover:opacity-70 transition-opacity"
+                      style="color:var(--text-primary);"
+                      @click="open = false"
+                    >
+                      <IconLayoutDashboard :size="15" />
+                      Landing Page
+                    </NuxtLink>
+                    <NuxtLink
+                      to="/account"
+                      class="flex items-center gap-2 px-4 py-2 font-comic font-bold text-sm no-underline hover:opacity-70 transition-opacity"
+                      style="color:var(--text-primary);"
+                      @click="open = false"
+                    >
+                      <IconUserCog :size="15" />
+                      Account
+                    </NuxtLink>
+                    <div
+                      class="my-1 border-t"
+                      style="border-color:var(--border-color);"
+                    />
+                    <button
+                      class="flex items-center gap-2 w-full px-4 py-2 font-comic font-bold text-sm hover:opacity-70 transition-opacity"
+                      style="color:#dc2626;"
+                      @click="handleLogout"
+                    >
+                      <IconLogOut :size="15" />
+                      Log Out
+                    </button>
+                  </div>
+                </Transition>
+              </div>
+            </template>
+          </ClientOnly>
           <NuxtLink
             to="/profile"
             target="_blank"
@@ -151,6 +205,23 @@ import {
 import { useProfileStore } from '~/stores/profile'
 import { useAccentColor } from '~/composables/useAccentColor'
 
+const authStore = useAuthStore()
+const isAuthenticated = computed(() => authStore.isAuthenticated)
+const userName = computed(() => authStore.user?.name ?? '')
+
+// ── Dropdown ─────────────────────────────────────────────
+const open = ref(false)
+const menuRef = ref<HTMLElement | null>(null)
+
+onClickOutside(menuRef, () => { open.value = false })
+
+// ── Logout ───────────────────────────────────────────────
+const logout = useLogout()
+async function handleLogout() {
+  open.value = false
+  await logout()
+}
+
 const iconMap = markRaw({ Link, User, Palette, BarChart2 })
 
 useHead({ title: 'Admin | Linkdung' })
@@ -183,7 +254,16 @@ function executeDelete() {
 </script>
 
 <style scoped>
-.slide-down-enter-active { animation: pop-in 0.3s ease; }
-.slide-down-leave-active { transition: opacity 0.2s, transform 0.2s; }
-.slide-down-leave-to { opacity: 0; transform: translateY(-10px); }
+.slide-down-enter-active {
+  animation: pop-in 0.3s ease;
+}
+
+.slide-down-leave-active {
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.slide-down-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
 </style>

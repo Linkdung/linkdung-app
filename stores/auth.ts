@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 
-// Sesuai type User di backend schema
+// Sesuai return type register/login dari backend: { username, accessToken, refreshToken }
 export interface AuthUser {
-  name: string
+  username: string
 }
 
 export const useAuthStore = defineStore('auth', () => {

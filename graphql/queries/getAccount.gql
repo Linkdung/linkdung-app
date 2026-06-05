@@ -1,0 +1,8 @@
+query GetAccount {
+  auth {
+    me {
+      name
+      email
+    }
+  }
+}

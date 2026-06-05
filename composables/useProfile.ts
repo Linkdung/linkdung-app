@@ -20,7 +20,6 @@ import { useProfileStore } from '~/stores/profile'
 import GET_PUBLIC_PROFILE from '~/graphql/queries/getPublicProfile.gql'
 import GET_ADMIN_PROFILE from '~/graphql/queries/getAdminProfile.gql'
 import GET_ANALYTICS from '~/graphql/queries/getAnalytics.gql'
-import CHECK_USERNAME from '~/graphql/queries/checkUsername.gql'
 import UPDATE_PROFILE from '~/graphql/mutations/updateProfile.gql'
 import ADD_LINK from '~/graphql/mutations/addLink.gql'
 import UPDATE_LINK from '~/graphql/mutations/updateLink.gql'
@@ -39,7 +38,6 @@ export const profileKeys = {
   detail: (u: string) => ['profiles', u] as const,
   admin: () => ['profiles', 'me'] as const,
   analytics: (u: string) => ['profiles', u, 'analytics'] as const,
-  username: (u: string) => ['username-check', u] as const,
 }
 
 // ─── Helper: Apollo → Promise ────────────────────────────────────────────────
@@ -151,26 +149,6 @@ export function useAnalyticsQuery(username: MaybeRef<string>) {
     enabled: computed(() => !!unref(username)),
     staleTime: 0, // always consider stale
     refetchInterval: 1000 * 30, // polling 30 detik
-  })
-}
-
-/**
- * Username availability — untuk form sign up
- * Hanya aktif kalau username >= 3 karakter
- */
-export function useUsernameCheck(username: MaybeRef<string>) {
-  const apollo = useApolloExecute()
-
-  return useQuery({
-    queryKey: computed(() => profileKeys.username(unref(username))),
-    queryFn: async () => {
-      const data = await apollo.query<{ profile: { isUsernameAvailable: boolean } }>(
-        CHECK_USERNAME, { username: unref(username) },
-      )
-      return data.profile.isUsernameAvailable
-    },
-    enabled: computed(() => unref(username).length >= 3),
-    staleTime: 1000 * 10, // 10 detik — cukup fresh untuk form validation
   })
 }
 

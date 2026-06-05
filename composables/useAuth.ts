@@ -1,53 +1,79 @@
 /**
  * useAuth.ts
  *
- * Auth composables: Register, Login, Logout.
- * Pola sama dengan useProfile.ts — Apollo execute → TanStack mutation → store sync.
+ * Auth composables: Register, Login, Logout, CheckUsername.
  *
- * Backend schema:
- *   input UserInput { name, email, password }  ← satu input untuk keduanya
- *   type User { name, accessToken }
- *   AuthOps.register(input: UserInput!): Any!
- *   AuthOps.login(input: UserInput!):    Any!
- *
- * Flow:
- *   Form submit → useMutation.mutate(input)
- *     → Apollo GraphQL mutation (return Any — di-cast ke AuthResponse)
- *     → onSuccess: onLogin(accessToken) + update authStore → redirect /admin
+ * Backend schema (updated):
+ *   input UserInput { username, email, password }
+ *   register/login returns: { username, accessToken, refreshToken }
+ *   auth.checkUsername(input: String!): Boolean
  */
 
-import { useMutation } from '@tanstack/vue-query'
+import { useQuery, useMutation } from '@tanstack/vue-query'
 import { useApolloClient } from '@vue/apollo-composable'
 import type { AuthUser } from '~/stores/auth'
 import { useAuthStore } from '~/stores/auth'
 import REGISTER from '~/graphql/mutations/register.gql'
 import LOGIN from '~/graphql/mutations/login.gql'
+import CHECK_USERNAME from '~/graphql/queries/checkUsername.gql'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-// Sesuai UserInput di backend — satu input untuk register & login
+// Sesuai UserInput di backend
 export interface UserInput {
-  name: string
+  username: string
   email: string
   password: string
 }
 
-// Sesuai User type di backend — Any! di-cast ke ini
+// Sesuai return type register/login
 interface AuthResponse {
-  name: string
+  username: string
   accessToken: string
+  refreshToken: string
 }
 
-// ─── Helper: Apollo → Promise ─────────────────────────────────────────────────
+// ─── Helper ───────────────────────────────────────────────────────────────────
 
 function useApolloExecute() {
   const { client } = useApolloClient()
   return {
+    query: <T>(doc: unknown, variables?: Record<string, unknown>) =>
+      client
+        .query<T>({ query: doc as never, variables, fetchPolicy: 'network-only' })
+        .then(r => r.data),
     mutate: <T>(doc: unknown, variables?: Record<string, unknown>) =>
       client
         .mutate<T>({ mutation: doc as never, variables })
         .then(r => r.data as T),
   }
+}
+
+// ─── Cache keys ───────────────────────────────────────────────────────────────
+
+export const authKeys = {
+  username: (u: string) => ['auth', 'username-check', u] as const,
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CHECK USERNAME (signup form)
+// ═══════════════════════════════════════════════════════════════════════════
+
+export function useUsernameCheck(username: MaybeRef<string>) {
+  const apollo = useApolloExecute()
+
+  return useQuery({
+    queryKey: computed(() => authKeys.username(unref(username))),
+    queryFn: async () => {
+      const data = await apollo.query<{ auth: { checkUsername: boolean } }>(
+        CHECK_USERNAME,
+        { input: unref(username) },
+      )
+      return data.auth.checkUsername
+    },
+    enabled: computed(() => unref(username).length >= 3),
+    staleTime: 1000 * 10,
+  })
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -62,17 +88,15 @@ export function useRegisterMutation() {
 
   return useMutation({
     mutationFn: async (input: UserInput) => {
-      // Return Any! — Apollo beri data mentah, cast manual
       const data = await apollo.mutate<{ auth: { register: AuthResponse } }>(
         REGISTER,
         { input },
       )
       return data.auth.register
     },
-    onSuccess: async ({ name, accessToken }) => {
-      // Simpan token ke cookie Apollo — semua request berikutnya pakai Bearer token
+    onSuccess: async ({ username, accessToken }) => {
       await onLogin(accessToken)
-      authStore.setAuth(accessToken, { name } satisfies AuthUser)
+      authStore.setAuth(accessToken, { username } satisfies AuthUser)
       await router.push('/admin')
     },
   })
@@ -96,9 +120,9 @@ export function useLoginMutation() {
       )
       return data.auth.login
     },
-    onSuccess: async ({ name, accessToken }) => {
+    onSuccess: async ({ username, accessToken }) => {
       await onLogin(accessToken)
-      authStore.setAuth(accessToken, { name } satisfies AuthUser)
+      authStore.setAuth(accessToken, { username } satisfies AuthUser)
       await router.push('/admin')
     },
   })

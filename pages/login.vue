@@ -197,15 +197,27 @@
             >
               <div
                 v-if="mode==='signup'"
-                key="name"
+                key="username"
+                class="space-y-4"
               >
-                <label class="font-comic font-bold text-xs block mb-1">Display Name</label>
-                <input
-                  v-model="form.name"
-                  class="input-comic"
-                  placeholder="John Doe"
-                  autocomplete="name"
-                />
+                <div>
+                  <label class="font-comic font-bold text-xs block mb-1">Username</label>
+                  <div class="relative">
+                    <input
+                      v-model="form.username"
+                      class="input-comic pr-28"
+                      placeholder="johndoe"
+                      autocomplete="username"
+                    />
+                    <span
+                      v-if="form.username.length >= 3"
+                      class="absolute right-3 top-1/2 -translate-y-1/2 font-comic text-xs font-bold"
+                      :style="usernameStatus.color"
+                    >
+                      {{ usernameStatus.label }}
+                    </span>
+                  </div>
+                </div>
               </div>
             </Transition>
             <div>
@@ -536,9 +548,21 @@ const route = useRoute()
 const mode = ref<'signup' | 'login'>(route.query.mode === 'login' ? 'login' : 'signup')
 
 // ── Form state ───────────────────────────────────────────
-const form = reactive({ name: '', email: '', password: '' })
+const form = reactive({ username: '', email: '', password: '' })
 const showPassword = ref(false)
 const errorMsg = ref('')
+
+// ── Username availability check (signup only) ────────────
+const { data: usernameAvailable, isFetching: checkingUsername } = useUsernameCheck(
+  computed(() => form.username),
+)
+
+const usernameStatus = computed(() => {
+  if (form.username.length < 3) return { label: '', color: '' }
+  if (checkingUsername.value) return { label: 'Checking...', color: 'color:var(--text-muted);' }
+  if (usernameAvailable.value) return { label: '✓ Available', color: 'color:#16a34a;' }
+  return { label: '✗ Taken', color: 'color:#dc2626;' }
+})
 
 // ── Forgot password ──────────────────────────────────────
 const showForgot = ref(false)
@@ -605,13 +629,14 @@ async function handleEmail() {
   }
 
   if (mode.value === 'signup') {
-    if (!form.name) { errorMsg.value = 'Please enter your display name.'; return }
+    if (!form.username || form.username.length < 3) { errorMsg.value = 'Username min. 3 characters.'; return }
+    if (usernameAvailable.value === false) { errorMsg.value = 'Username already taken.'; return }
 
-    register({ name: form.name, email: form.email, password: form.password })
+    register({ username: form.username, email: form.email, password: form.password })
   }
   else {
-    // name tidak dipakai saat login, kirim string kosong sesuai UserInput! yang required
-    login({ name: '', email: form.email, password: form.password })
+    // username tidak dipakai saat login, kirim string kosong
+    login({ username: '', email: form.email, password: form.password })
   }
 }
 

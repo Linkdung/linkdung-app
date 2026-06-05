@@ -1,5 +1,9 @@
 mutation Login($input: UserInput!) {
   auth {
-    login(input: $input)
+    login(input: $input) {
+      username
+      accessToken
+      refreshToken
+    }
   }
 }

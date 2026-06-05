@@ -1,5 +1,5 @@
-query CheckUsername($username: String!) {
-  profile {
-    isUsernameAvailable(username: $username)
+query CheckUsername($input: String!) {
+  auth {
+    checkUsername(input: $input)
   }
 }
