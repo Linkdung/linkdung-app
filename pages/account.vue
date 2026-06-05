@@ -204,7 +204,7 @@
 
           <button
             type="submit"
-            class="btn-ghost px-6 py-2 font-display text-lg text-white flex items-center gap-2"
+            class="btn-ghost px-6 py-2 font-display text-lg flex items-center gap-2"
             :disabled="changingPassword"
           >
             <IconHourglass
@@ -224,7 +224,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ layout: 'default' })
+definePageMeta({ layout: 'default', middleware: 'auth' })
 useHead({ title: 'Account | Linkdung' })
 
 // ── Account detail ───────────────────────────────────────

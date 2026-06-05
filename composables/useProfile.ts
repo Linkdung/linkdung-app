@@ -95,7 +95,7 @@ export function usePublicProfileQuery(username: MaybeRef<string>) {
       )
       const mapped = mapToProfileData(data.profile.getByUsername)
       // Sync ke published — halaman publik pakai published (bukan draft)
-      store.published.value = { ...store.published.value, ...mapped }
+      store.hydratePublished(mapped)
       return mapped
     },
     enabled: computed(() => !!unref(username)),
@@ -120,7 +120,7 @@ export function useAdminProfileQuery() {
       )
       const mapped = mapToProfileData(data.profile.me)
       // Update published dulu, lalu discardDraft() sync ke draft
-      store.published.value = { ...store.published.value, ...mapped }
+      store.hydratePublished(mapped)
       store.discardDraft()
       return mapped
     },
@@ -167,7 +167,7 @@ export function useSaveProfileMutation() {
 
   return useMutation({
     mutationFn: async () => {
-      const { links, socialLinks, ...rest } = store.draft.value
+      const { links, socialLinks, ...rest } = store.draft
       const data = await apollo.mutate<{ profile: { update: Record<string, unknown> } }>(
         UPDATE_PROFILE,
         {
@@ -188,7 +188,7 @@ export function useSaveProfileMutation() {
     },
     onSuccess: (updated) => {
       // Server response jadi sumber kebenaran — bukan draft
-      store.published.value = { ...store.published.value, ...updated }
+      store.hydratePublished(updated)
       store.discardDraft()
       qc.invalidateQueries({ queryKey: profileKeys.admin() })
     },
@@ -213,7 +213,7 @@ export function useAddLinkMutation() {
     },
     onSuccess: (serverLink) => {
       // Replace optimistic entry dengan ID + createdAt resmi dari server
-      const draft = store.draft.value
+      const draft = store.draft
       const idx = draft.links.findIndex(l =>
         l.title === serverLink.title && l.url === serverLink.url,
       )
@@ -349,7 +349,7 @@ export function useAddSocialLinkMutation() {
     },
     onSuccess: (serverSocial) => {
       // Replace optimistic entry dengan ID resmi
-      const draft = store.draft.value
+      const draft = store.draft
       const idx = draft.socialLinks.findIndex(
         s => s.platform === serverSocial.platform && s.url === serverSocial.url,
       )
@@ -396,7 +396,7 @@ export function useRecordClickMutation() {
     },
     onSuccess: ({ linkId, clicks }) => {
       // Sync angka resmi dari server (bukan optimistic)
-      const link = store.published.value.links.find(l => l.id === linkId)
+      const link = store.published.links.find(l => l.id === linkId)
       if (link) link.clicks = clicks
     },
   })

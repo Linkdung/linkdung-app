@@ -205,9 +205,11 @@ import {
 import { useProfileStore } from '~/stores/profile'
 import { useAccentColor } from '~/composables/useAccentColor'
 
+definePageMeta({ middleware: 'auth' })
+
 const authStore = useAuthStore()
 const isAuthenticated = computed(() => authStore.isAuthenticated)
-const userName = computed(() => authStore.user?.name ?? '')
+const userName = computed(() => authStore.user?.username ?? '')
 
 // ── Dropdown ─────────────────────────────────────────────
 const open = ref(false)

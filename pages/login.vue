@@ -560,8 +560,10 @@ const { data: usernameAvailable, isFetching: checkingUsername } = useUsernameChe
 const usernameStatus = computed(() => {
   if (form.username.length < 3) return { label: '', color: '' }
   if (checkingUsername.value) return { label: 'Checking...', color: 'color:var(--text-muted);' }
-  if (usernameAvailable.value) return { label: '✓ Available', color: 'color:#16a34a;' }
-  return { label: '✗ Taken', color: 'color:#dc2626;' }
+  if (usernameAvailable.value === true) return { label: '✓ Available', color: 'color:#16a34a;' }
+  if (usernameAvailable.value === false) return { label: '✗ Taken', color: 'color:#dc2626;' }
+  // Hasil belum kembali — jangan tampilkan status menyesatkan
+  return { label: '', color: '' }
 })
 
 // ── Forgot password ──────────────────────────────────────

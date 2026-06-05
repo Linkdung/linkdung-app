@@ -259,11 +259,9 @@ function reset() {
   showEmoji.value = false
 }
 
-onMounted(() => {
-  document.addEventListener('click', (e) => {
-    if (emojiRef.value && !emojiRef.value.contains(e.target as Node)) showEmoji.value = false
-  })
-})
+// Tutup emoji picker saat klik di luar — onClickOutside auto-cleanup saat unmount
+// (mengganti document.addEventListener manual yang tidak pernah di-remove → memory leak)
+onClickOutside(emojiRef, () => { showEmoji.value = false })
 </script>
 
 <style scoped>

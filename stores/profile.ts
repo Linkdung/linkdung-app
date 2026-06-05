@@ -171,6 +171,13 @@ export const useProfileStore = defineStore('profile', () => {
     }
   }
 
+  // [CHANGE] Merge data dari server ke published — dipakai composable useProfile.
+  // Mutasi via action (akses `published.value` di dalam store = benar), bukan
+  // `store.published.value = …` dari luar (di setup store ref sudah di-unwrap → bug).
+  function hydratePublished(data: Partial<ProfileData>) {
+    published.value = { ...published.value, ...data }
+  }
+
   // [CHANGE] Fungsi baru: preview accent di draft + CSS vars, tanpa sentuh published
   function previewAccentColor(hex: string) {
     draft.value.accentColor = hex
@@ -206,7 +213,7 @@ export const useProfileStore = defineStore('profile', () => {
     profile, visibleLinks, totalClicks, allLinks,
     addLink, updateLink, removeLink, reorderLinks,
     toggleLinkVisibility, toggleLinkHighlight,
-    recordClick, updateProfile,
+    recordClick, updateProfile, hydratePublished,
     addSocialLink, removeSocialLink,
     previewAccentColor, saveProfile, discardDraft,
   }
