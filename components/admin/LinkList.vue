@@ -67,32 +67,42 @@
         </p>
       </div>
 
-      <TransitionGroup
+      <VueDraggable
         v-else
-        name="link-list"
-        tag="div"
+        v-model="orderedLinks"
+        :animation="200"
+        handle=".drag-handle"
+        ghost-class="drag-ghost"
+        drag-class="drag-active"
         class="space-y-3"
       >
         <div
-          v-for="(link, index) in links"
+          v-for="(link, index) in orderedLinks"
           :key="link.id"
           class="flex items-stretch gap-2"
         >
-          <!-- reorder buttons -->
-          <div class="flex flex-col justify-center gap-1 flex-shrink-0">
+          <!-- drag handle + reorder buttons -->
+          <div class="flex flex-col items-center justify-center gap-1 flex-shrink-0">
+            <div
+              class="drag-handle flex items-center justify-center px-1.5 py-1 border-2 border-black cursor-grab active:cursor-grabbing touch-none select-none"
+              style="background:var(--bg-card); color:var(--text-primary);"
+              title="Drag to reorder"
+            >
+              <IconGripVertical :size="14" />
+            </div>
             <button
               class="text-xs px-1.5 py-1 border-2 border-black font-bold transition-colors hover:bg-black hover:text-white disabled:opacity-30"
               style="background:var(--bg-card); color:var(--text-primary);"
               :disabled="index === 0"
-              @click="store.reorderLinks(moveItem(links, index, -1))"
+              @click="store.reorderLinks(moveItem(orderedLinks, index, -1))"
             >
               ▲
             </button>
             <button
               class="text-xs px-1.5 py-1 border-2 border-black font-bold transition-colors hover:bg-black hover:text-white disabled:opacity-30"
               style="background:var(--bg-card); color:var(--text-primary);"
-              :disabled="index === links.length - 1"
-              @click="store.reorderLinks(moveItem(links, index, 1))"
+              :disabled="index === orderedLinks.length - 1"
+              @click="store.reorderLinks(moveItem(orderedLinks, index, 1))"
             >
               ▼
             </button>
@@ -104,12 +114,13 @@
             />
           </div>
         </div>
-      </TransitionGroup>
+      </VueDraggable>
     </div>
   </Transition>
 </template>
 
 <script setup lang="ts">
+import { VueDraggable } from 'vue-draggable-plus'
 import {
   ArrowUpDown,
   Eye, Star, Trash,
@@ -126,10 +137,17 @@ const subtitles = [
   { icon: 'Trash', label: 'Delete' },
 ]
 
-defineProps<{ links: LinkItem[] }>()
+const props = defineProps<{ links: LinkItem[] }>()
 defineEmits<{ delete: [id: string, title: string] }>()
 
 const store = useProfileStore()
+
+// v-model untuk VueDraggable: get dari draft (prop), set commit urutan baru ke store.
+// store.reorderLinks() me-reindex `order` lalu isDirty otomatis → tinggal Save.
+const orderedLinks = computed<LinkItem[]>({
+  get: () => props.links,
+  set: newOrder => store.reorderLinks(newOrder),
+})
 
 // isReady: skeleton tampil di server/hydration, konten asli fade-in setelah mount
 const isReady = ref(false)
@@ -144,11 +162,17 @@ function moveItem(arr: LinkItem[], index: number, direction: -1 | 1): LinkItem[]
 </script>
 
 <style scoped>
-.link-list-enter-active { transition: all 0.25s ease; }
-.link-list-leave-active { transition: all 0.2s ease; position: absolute; width: 100%; }
-.link-list-enter-from   { opacity: 0; transform: translateY(-10px); }
-.link-list-leave-to     { opacity: 0; transform: translateX(20px); }
-.link-list-move         { transition: transform 0.3s ease; }
+/* Placeholder slot saat item ditarik */
+.drag-ghost {
+  opacity: 0.4;
+  background: var(--bg-secondary);
+}
+
+/* Item yang sedang aktif ditarik */
+.drag-active {
+  cursor: grabbing;
+  box-shadow: 6px 6px 0 var(--border-color);
+}
 
 .list-fade-enter-active { transition: opacity 0.3s ease; }
 .list-fade-enter-from   { opacity: 0; }
