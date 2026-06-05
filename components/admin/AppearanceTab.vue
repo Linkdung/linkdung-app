@@ -217,7 +217,6 @@ function previewAccentColor(hex: string) {
 }
 
 const roadmap = [
-  { icon: '🔐', title: 'Authentication & Login', desc: 'Multi-user support dengan OAuth (Google, GitHub)', badge: 'Soon', bg: '#fff3cd' },
   { icon: '🌐', title: 'Custom Domain', desc: 'Point yourdomain.com ke profil Linkdung kamu', badge: 'Soon', bg: '#d1ecf1' },
   { icon: '📧', title: 'Email Capture Widget', desc: 'Tambahkan newsletter signup langsung di profil', badge: 'Soon', bg: '#d4edda' },
   { icon: '🎬', title: 'Embedded Media Blocks', desc: 'YouTube preview, Spotify player, tweet embed inline', badge: 'Planned', bg: '#f8d7da' },
