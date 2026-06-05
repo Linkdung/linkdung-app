@@ -356,12 +356,12 @@ const openFaq = ref<number | null>(null)
 
 const templates = [
   { name: 'Main', icon: '😎', bg: '#E23636', desc: 'Bold red & comic book', badge: 'Default', badgeColor: '#FFD700', badgeText: '#000' },
-  { name: 'Noir', icon: '🌃', bg: '#0A0A0A', desc: 'Dark & mysterious', badge: null, badgeColor: '', badgeText: '' },
-  { name: 'Gwen', icon: '🩷', bg: '#FF2D78', desc: 'Pink & pastel vibes', badge: 'Popular', badgeColor: '#E23636', badgeText: '#fff' },
-  { name: '2099', icon: '🔮', bg: '#00D4FF', desc: 'Futuristic cyan blue', badge: null, badgeColor: '', badgeText: '' },
+  { name: 'Midnight', icon: '🌃', bg: '#0A0A0A', desc: 'Dark & mysterious', badge: null, badgeColor: '', badgeText: '' },
+  { name: 'Blush', icon: '🩷', bg: '#FF2D78', desc: 'Pink & pastel vibes', badge: 'Popular', badgeColor: '#E23636', badgeText: '#fff' },
+  { name: 'Neon', icon: '🔮', bg: '#00D4FF', desc: 'Futuristic cyan blue', badge: null, badgeColor: '', badgeText: '' },
   { name: 'City Night', icon: '🏙️', bg: '#1A3A6B', desc: 'Deep navy classic', badge: null, badgeColor: '', badgeText: '' },
-  { name: 'Web Gold', icon: '✨', bg: '#FFD700', desc: 'Bold golden energy', badge: null, badgeColor: '', badgeText: '' },
-  { name: 'Noir Purple', icon: '🟣', bg: '#7B2FBE', desc: 'Elegant purple tones', badge: 'New', badgeColor: '#16A34A', badgeText: '#fff' },
+  { name: 'Gold', icon: '✨', bg: '#FFD700', desc: 'Bold golden energy', badge: null, badgeColor: '', badgeText: '' },
+  { name: 'Purple', icon: '🟣', bg: '#7B2FBE', desc: 'Elegant purple tones', badge: 'New', badgeColor: '#16A34A', badgeText: '#fff' },
   { name: 'Ink Green', icon: '🌿', bg: '#16A34A', desc: 'Fresh & organic', badge: null, badgeColor: '', badgeText: '' },
 ]
 const testimonials = [
@@ -373,11 +373,11 @@ const testimonials = [
   { name: 'Mul Ono.', role: 'Photographer', text: 'Dark mode looks INSANE. My whole aesthetic is dark and gritty and this was the first link-in-bio tool that actually matched.', shadowColor: '#0A0A0A', avatarBg: '#0A0A0A' },
 ]
 const pricingPlans = [
-  { name: 'Free', icon: '🕸️', price: '$0', period: 'forever', featured: false, badge: null,
+  { name: 'Free', icon: '🔗', price: '$0', period: 'forever', featured: false, badge: null,
     cta: 'Start Free', features: ['Unlimited links', 'Basic analytics', '5 card styles + custom color', 'Dark & light mode', '✗ Custom domain', '✗ Priority support'] },
-  { name: 'Pro', icon: '🕷️', price: '$5', period: '/month', featured: true, badge: 'Most Popular',
+  { name: 'Pro', icon: '⚡', price: '$5', period: '/month', featured: true, badge: 'Most Popular',
     cta: 'Go Pro', features: ['Everything in Free', 'Advanced analytics (bar/line/pie)', 'Custom domain', 'Remove branding', 'Priority support', 'Early template access'] },
-  { name: 'Team', icon: '🕸️🕷️', price: '$15', period: '/month', featured: false, badge: null,
+  { name: 'Team', icon: '🚀', price: '$15', period: '/month', featured: false, badge: null,
     cta: 'Contact Us', features: ['Everything in Pro', 'Up to 5 profiles', 'Team dashboard', 'Shared analytics', 'API access', 'Dedicated support'] },
 ]
 const faqs = [

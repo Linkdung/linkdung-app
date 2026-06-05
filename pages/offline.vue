@@ -7,7 +7,7 @@
       class="relative z-10 w-full max-w-md text-center"
       style="animation:pop-in 0.5s cubic-bezier(0.175,0.885,0.32,1.275);"
     >
-      <!-- Broken web icon -->
+      <!-- Broken network icon -->
       <div class="mb-6 relative inline-block">
         <svg
           width="120"
@@ -108,13 +108,13 @@
           class="font-display text-xl mb-4"
           style="color:var(--text-primary);"
         >
-          Web signal lost
+          Connection lost
         </h1>
         <p
           class="font-comic text-sm leading-relaxed mb-6"
           style="color:var(--text-muted);"
         >
-          Even the best web-slingers need a signal.
+          Even the best connections drop sometimes.
           Check your internet connection and try again.
         </p>
         <button

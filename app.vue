@@ -1,6 +1,6 @@
 <template>
   <div :class="isDark ? 'dark' : ''" class="min-h-screen halftone-bg">
-    <SpiderWebCorners />
+    <NetworkCorners />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

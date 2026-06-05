@@ -329,13 +329,6 @@
     box-shadow: 12px 12px 0px var(--accent-primary) !important;
   }
 
-  /* ──  Web Decoration ─── */
-  .spider-web-corner {
-    position: absolute;
-    opacity: 0.12;
-    pointer-events: none;
-  }
-
   /* ── Page Transitions ─── */
   .page-enter-active, .page-leave-active {
     transition: all 0.3s ease;

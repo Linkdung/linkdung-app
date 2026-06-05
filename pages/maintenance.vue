@@ -83,13 +83,13 @@
       class="relative z-10 w-full max-w-md text-center"
       style="animation:pop-in 0.5s cubic-bezier(0.175,0.885,0.32,1.275);"
     >
-      <!-- Spider reweaving animation -->
+      <!-- Gear / maintenance animation -->
       <div class="mb-6 relative">
         <span
           class="text-8xl block"
           style="animation:spin-slow 4s linear infinite;"
-        >🕸️</span>
-        <span class="text-4xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 float-anim">🕷️</span>
+        >⚙️</span>
+        <span class="text-4xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 float-anim">🔧</span>
       </div>
 
       <div
@@ -106,13 +106,13 @@
           class="font-display text-xl mb-4"
           style="color:var(--text-primary);"
         >
-          We're reweaving the web
+          We're upgrading the network
         </h1>
         <p
           class="font-comic text-sm leading-relaxed mb-6"
           style="color:var(--text-muted);"
         >
-          Linkdung is getting an upgrade. Our worker is hard at work spinning
+          Linkdung is getting an upgrade. Our team is hard at work building
           something better. Check back in a few minutes!
         </p>
 
@@ -151,7 +151,7 @@
           class="font-comic text-sm px-3 py-2 border-2 border-black"
           style="background:#FFD700;color:#000;"
         >
-           We'll ping you when the web is ready!
+          We'll ping you when we're back online!
         </div>
       </div>
 

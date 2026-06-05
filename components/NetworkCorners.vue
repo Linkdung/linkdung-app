@@ -1,10 +1,10 @@
 <template>
-  <!-- Spider Web SVG corner decorations -->
+  <!-- Network strand SVG corner decorations (jaringan koneksi link) -->
   <div
     class="fixed inset-0 pointer-events-none z-0 overflow-hidden"
     aria-hidden="true"
   >
-    <!-- Top-left web -->
+    <!-- Top-left strands -->
     <svg
       class="absolute top-0 left-0 opacity-10 dark:opacity-20 w-48 h-48"
       viewBox="0 0 200 200"
@@ -53,7 +53,7 @@
       </g>
     </svg>
 
-    <!-- Top-right web -->
+    <!-- Top-right strands -->
     <svg
       class="absolute top-0 right-0 opacity-10 dark:opacity-20 w-48 h-48"
       viewBox="0 0 200 200"

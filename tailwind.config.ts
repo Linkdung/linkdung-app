@@ -14,7 +14,7 @@ export default {
     extend: {
       // ─── Color Palette ────────────────────────────────────
       colors: {
-        spider: {
+        comic: {
           'red': '#E23636',
           'red-dark': '#B01C1C',
           'blue': '#1A3A6B',

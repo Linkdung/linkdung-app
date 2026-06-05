@@ -65,7 +65,7 @@ const DEFAULT_PROFILE: ProfileData = {
     },
     {
       id: 'link-2', title: 'Adit Merch', url: 'https://example.com/merch',
-      description: 'Official Adit gear', emoji: '🕷️',
+      description: 'Official Adit gear', emoji: '🛍️',
       isVisible: true, isHighlighted: false, style: 'blue', order: 1, clicks: 153, createdAt: new Date().toISOString(),
     },
     {

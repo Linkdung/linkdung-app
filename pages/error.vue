@@ -108,8 +108,8 @@
           style="color:var(--accent-primary);-webkit-text-stroke:3px var(--border-color);text-shadow:6px 6px 0 var(--border-color);"
           aria-hidden="true"
         >{{ errorCode }}</span>
-        <!-- Spider dangling from the number -->
-        <span class="text-5xl absolute -right-4 -bottom-4 float-anim inline-block select-none">🕷️</span>
+        <!-- Unplugged icon dangling from the number -->
+        <span class="text-5xl absolute -right-4 -bottom-4 float-anim inline-block select-none">🔌</span>
       </div>
 
       <!-- Card -->
@@ -203,24 +203,24 @@ const title = computed(() => {
 
 const message = computed(() => {
   switch (props.error?.statusCode) {
-    case 404: return 'Looks like this page got tangled up in the web and vanished. Double-check the URL or head back home.'
+    case 404: return 'Looks like this page got lost somewhere in the network and vanished. Double-check the URL or head back home.'
     case 401: return 'You need to be logged in to access this page. Please sign in and try again.'
     case 403: return 'You don\'t have permission to view this page. If you think this is a mistake, contact support.'
     case 429: return 'Whoa, slow down! You\'ve made too many requests. Take a breather and try again in a moment.'
     case 500: return 'Our server stumbled on a loose thread. We\'re on it — try refreshing or come back shortly.'
-    case 503: return 'We\'re doing some quick maintenance. The web is being re-spun — back shortly!'
+    case 503: return 'We\'re doing some quick maintenance. The network is being rewired — back shortly!'
     default: return props.error?.message || 'An unexpected error occurred. Please try again.'
   }
 })
 
 const funLine = computed(() => {
   const lines: Record<number, string> = {
-    404: 'Even Spider-Man sometimes can\'t find the right building. ',
+    404: 'Even the best map has a missing street sometimes. ',
     401: 'Every hero needs to prove themselves first. ',
-    403: 'This sector of the web is restricted. ',
-    429: 'Easy there, speedster. Even web-crawlers need a cooldown. ',
-    500: 'With great power comes great responsibility... and occasional bugs. ',
-    503: 'The spider is reweaving. Won\'t take long. ',
+    403: 'This sector of the network is restricted. ',
+    429: 'Easy there, speed racer. Even servers need a breather. ',
+    500: 'Every great app trips over a loose wire sometimes. ',
+    503: 'The network is being rewired. Won\'t take long. ',
   }
   return lines[props.error?.statusCode ?? 0] ?? 'Every bug gets squashed eventually.'
 })

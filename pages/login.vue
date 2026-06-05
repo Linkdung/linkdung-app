@@ -3,7 +3,7 @@
     class="min-h-screen flex items-center justify-center px-4 py-12 relative overflow-hidden"
     style="background:var(--bg-primary);"
   >
-    <!-- ── Spider Web Background ─────────────────────────── -->
+    <!-- ── Network Strand Background ─────────────────────── -->
     <div
       class="fixed inset-0 pointer-events-none"
       aria-hidden="true"
@@ -266,7 +266,7 @@
               :disabled="isLoading"
             >
               <span v-if="isLoading">⏳ Loading...</span>
-              <span v-else-if="mode==='signup'">Create Account 🕸️</span>
+              <span v-else-if="mode==='signup'">Create Account ⚡</span>
               <span v-else>Log In →</span>
             </button>
             <!-- Forgot password trigger -->
