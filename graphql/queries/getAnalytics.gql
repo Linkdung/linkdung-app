@@ -1,0 +1,13 @@
+query GetProfileAnalytics($username: String!) {
+  profile {
+    getByUsername(username: $username) {
+      totalClicks
+      links(orderBy: { field: clicks, dir: DESC }) {
+        id
+        title
+        clicks
+        createdAt
+      }
+    }
+  }
+}

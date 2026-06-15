@@ -1,0 +1,8 @@
+mutation ToggleLinkHighlight($id: ID!) {
+  link {
+    toggleHighlight(id: $id) {
+      id
+      isHighlighted
+    }
+  }
+}

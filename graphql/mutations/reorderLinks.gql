@@ -1,0 +1,8 @@
+mutation ReorderLinks($ids: [ID!]!) {
+  link {
+    reorder(ids: $ids) {
+      id
+      order
+    }
+  }
+}

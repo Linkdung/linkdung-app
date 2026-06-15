@@ -1,0 +1,5 @@
+query CheckUsername($input: String!) {
+  auth {
+    checkUsername(input: $input)
+  }
+}

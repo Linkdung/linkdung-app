@@ -1,0 +1,9 @@
+#import "../fragments/profile.gql"
+
+mutation AddSocialLink($input: AddSocialLinkInput!) {
+  socialLink {
+    add(input: $input) {
+      ...SocialLinkFields
+    }
+  }
+}

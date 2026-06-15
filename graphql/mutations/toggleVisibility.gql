@@ -1,0 +1,8 @@
+mutation ToggleLinkVisibility($id: ID!) {
+  link {
+    toggleVisibility(id: $id) {
+      id
+      isVisible
+    }
+  }
+}

@@ -1,0 +1,5 @@
+mutation RemoveLink($id: ID!) {
+  link {
+    remove(id: $id)
+  }
+}

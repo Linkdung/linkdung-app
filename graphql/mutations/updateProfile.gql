@@ -1,0 +1,9 @@
+#import "../fragments/profile.gql"
+
+mutation UpdateProfile($input: UpdateProfileInput!) {
+  profile {
+    update(input: $input) {
+      ...ProfileAdmin
+    }
+  }
+}

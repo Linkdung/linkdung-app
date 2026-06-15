@@ -1,0 +1,9 @@
+#import "../fragments/profile.gql"
+
+mutation AddLink($input: AddLinkInput!) {
+  link {
+    add(input: $input) {
+      ...LinkItemFields
+    }
+  }
+}

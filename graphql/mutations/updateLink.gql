@@ -1,0 +1,9 @@
+#import "../fragments/profile.gql"
+
+mutation UpdateLink($id: ID!, $input: UpdateLinkInput!) {
+  link {
+    update(id: $id, input: $input) {
+      ...LinkItemFields
+    }
+  }
+}
