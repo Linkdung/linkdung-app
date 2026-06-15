@@ -331,7 +331,7 @@ const features = [
   { icon: 'Star', title: 'Highlight Links', desc: 'Star your most important links so they stand out instantly.' },
   { icon: 'Smartphone', title: 'Mobile First', desc: 'Looks incredible on every device. Built responsive from day 1.' },
   { icon: 'Moon', title: 'Dark & Light Mode', desc: 'Full dark mode support. Your visitors pick what they prefer.' },
-  { icon: 'Rocket', title: 'Deploy to Netlify', desc: 'One click deploy. Your profile is live in under 60 seconds.' },
+  { icon: 'Rocket', title: 'Deploy to Vercel', desc: 'One click deploy. Your profile is live in under 60 seconds.' },
 ]
 
 const howItWorks = [

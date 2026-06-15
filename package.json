@@ -4,6 +4,9 @@
   "description": "LinkTree clone aesthetic - Linkdung",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",

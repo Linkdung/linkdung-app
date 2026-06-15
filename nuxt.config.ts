@@ -54,7 +54,9 @@ export default defineNuxtConfig({
 
   // ─── Nitro / Server ───────────────────────────────────────────────────────
   nitro: {
-    preset: 'netlify',
+    // Deploy ke Vercel — output ke .vercel/output (Build Output API v3),
+    // auto-terdeteksi oleh Vercel. Lokal tetap bisa `nuxt build`/`preview`.
+    preset: 'vercel',
     routeRules: {
       '/api/**': { cors: true },
     },

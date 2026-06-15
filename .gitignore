@@ -35,5 +35,5 @@ Thumbs.db
 *.sw?
 CLAUDE.md
 
-# Netlify
-.netlify/
+# Vercel
+.vercel/

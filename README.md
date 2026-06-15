@@ -34,7 +34,7 @@ It ships with two surfaces:
 | **Lucide Icons** | 2.x | Icon set (prefix `Icon`) |
 | **Vitest** | 2.x | Unit testing |
 | **TypeScript** | 5.x | Strict mode |
-| **Netlify** | — | Hosting & deployment (Nitro `netlify` preset) |
+| **Vercel** | — | Hosting & deployment (Nitro `vercel` preset) |
 
 > Backend is a separate GraphQL service (PostgreSQL); this repo is the frontend/SSR app.
 
@@ -125,7 +125,7 @@ npm run dev
 
 ```bash
 npm run dev          # Development server (http://localhost:3000)
-npm run build        # SSR build (Nitro netlify preset → dist/)
+npm run build        # SSR build (Nitro vercel preset → .vercel/output)
 npm run generate     # Static site generation
 npm run preview      # Preview production build
 npm run lint         # ESLint check
@@ -167,7 +167,7 @@ linkdung/
 ├── nuxt.config.ts             # Nuxt configuration
 ├── tailwind.config.ts         # Tailwind config
 ├── vitest.config.ts           # Test configuration
-└── netlify.toml               # Netlify deployment
+└── vercel.json                # Vercel deployment (headers, framework)
 ```
 
 ## State Architecture (draft / published)
@@ -206,48 +206,38 @@ npm test             # run once
 npm run test:watch   # watch mode
 ```
 
-## Deployment (Netlify)
+## Deployment (Vercel)
 
-This app deploys as **SSR** using the Nitro `netlify` preset (`nuxt.config.ts`).
-Config lives in `netlify.toml`:
+This app deploys as **SSR** using the Nitro `vercel` preset (`nuxt.config.ts`),
+which outputs to `.vercel/output` (Build Output API v3) — auto-detected by Vercel.
+Security & cache headers live in `vercel.json`. Node version is pinned via
+`engines.node` (`20.x`) in `package.json`.
 
-```toml
-[build]
-  command = "npm run build"   # NOT generate — the netlify preset needs nuxt build
-  publish = "dist"            # netlify preset outputs static assets here
-
-[build.environment]
-  NODE_VERSION = "20"
-  NPM_VERSION = "10"
-```
-
-> Don't add manual SPA redirects (`/* → /index.html`) — the netlify preset generates the
-> correct routing to the server function automatically; manual redirects break SSR.
-
-### Option A — Netlify CLI
+### Option A — Vercel CLI
 
 ```bash
-npm install -g netlify-cli
-netlify login
-netlify init
-netlify deploy --prod
+npm install -g vercel
+vercel login
+vercel            # preview deploy
+vercel --prod     # production deploy
 ```
 
 ### Option B — Git Integration
 
 1. Push to GitHub.
-2. Connect the repo in the Netlify dashboard.
-3. Build command and publish dir are read from `netlify.toml`.
-4. Set environment variables in the Netlify UI.
+2. Import the repo in the Vercel dashboard.
+3. Framework preset auto-detects **Nuxt** (build command `nuxt build`); no extra
+   config needed beyond `vercel.json`.
+4. Set environment variables in the Vercel UI.
 
-### Environment Variables (Netlify)
+### Environment Variables (Vercel)
 
-Set these in **Netlify → Site Settings → Environment Variables**:
+Set these in **Vercel → Project → Settings → Environment Variables**:
 
 ```
 GRAPHQL_ENDPOINT=https://your-api.com/graphql
 JWT_SECRET=your-production-secret
-APP_URL=https://your-site.netlify.app
+APP_URL=https://your-app.vercel.app
 ```
 
 ---
